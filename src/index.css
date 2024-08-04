@@ -1,0 +1,45 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@media (min-width: 700px) {
+    .ion-page {
+        width: 480px;
+        min-height: 100vh;
+        margin: auto;
+        position: relative;
+    }
+    .scroll-content {
+        overflow-y: auto;
+    }
+}
+.ant-form-item{
+    @apply !my-0
+}
+
+
+/* width */
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: #000;
+    border-radius: 3px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+/*ion-page > ion-content#content {*/
+/*    --ion-background-color: #d6d3d1;*/
+/*    width: 480px;*/
+/*    max-width: 100%;*/
+/*}*/
