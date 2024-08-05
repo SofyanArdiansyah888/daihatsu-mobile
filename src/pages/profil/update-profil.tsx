@@ -1,35 +1,47 @@
-import {Button, Form} from "antd";
-import {useHistory} from "react-router";
-import {usePost} from "../../hooks/useApi";
+import {Button, Form, message} from "antd";
+import {useHistory, useParams} from "react-router";
+import {usePut} from "../../hooks/useApi";
 import {IonContent, IonPage} from "@ionic/react";
 import NavHeader from "../../components/nav-header";
 import FormInput from "../../components/form/form-input";
-import React from "react";
+import React, {useEffect} from "react";
+import {useAuth} from "../../providers/AuthProvider";
 
 export default function UpdateProfilPage() {
-    const [form] = Form.useForm<FormData>();
+    const [form] = Form.useForm();
     const history = useHistory()
-    const {mutate, isPending} = usePost({
-        name: 'login',
-        endpoint: '/login',
-        withMessage: true,
-        errorMessage: "Server error!",
-        onSuccess: async () => {
-            history.push("/profil")
+    const {user, setUser} = useAuth()
+
+    const {mutate: update, isPending} = usePut({
+        id: user?.id,
+        name: 'user',
+        endpoint: '/user',
+        withMessage:false,
+        onSuccess: async ({data}: any) => {
+            setUser(data)
+            message.success("Berhasil mengupdate profil!")
         },
+        onError:() => {
+            message.error("Gagal mengupdate profil!")
+        }
     })
+
 
     function handleBack() {
         history.replace("/profil")
     }
 
-    function handleItemClick() {
-        history.replace("checkpoint/history")
+    function handleSubmit(value: any) {
+        update({
+            ...value
+        })
     }
 
-    function handleSubmit() {
-
-    }
+    useEffect(() => {
+        form.setFieldsValue({
+            ...user
+        })
+    }, []);
 
     return <IonPage>
         <IonContent scrollY={true}>

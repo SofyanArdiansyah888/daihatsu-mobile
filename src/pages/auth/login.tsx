@@ -1,28 +1,36 @@
 import {LockOutlined, SlackOutlined} from "@ant-design/icons"
 import FormInput from "../../components/form/form-input";
-import {Button, Form} from "antd";
+import {Button, Form, message} from "antd";
 import AuthLayout from "../../components/layout/auth-layout";
 import {useHistory} from "react-router";
 import {usePost} from "../../hooks/useApi";
+import {useAuth} from "../../providers/AuthProvider";
 
 
 export default function LoginPage() {
     const [form] = Form.useForm<FormData>();
+    const auth = useAuth();
     const history = useHistory()
     const {mutate, isPending} = usePost({
         name: 'login',
         endpoint: '/login',
-        withMessage: true,
-        errorMessage: "Server error!",
-        onSuccess: async () => {
+        withMessage: false,
+        onSuccess: async (data:any) => {
+            auth.login(data)
             history.push("/beranda")
         },
+        onError: async (error:any) => {
+            if(error?.response?.status === 500){
+                await message.error("Tidak dapat menghubungi server!")
+                return
+            }
+            await message.error("Username atau password salah!")
+        }
     })
 
     function handleSubmit(payload: FormData) {
-        history.push("/beranda")
         // @ts-ignore
-        // mutate(payload)
+        mutate(payload)
     }
 
     return <AuthLayout
@@ -42,7 +50,7 @@ export default function LoginPage() {
         >
             <div className={"!space-y-8 py-8"}>
                 <div className={"!space-y-4"}>
-                    <FormInput name={"username"} label={"Username"} size={"large"}/>
+                    <FormInput name={"name"} label={"Username"} size={"large"}/>
                     <FormInput name={"password"} label={"Password"} size={"large"} type={"password"}/>
                 </div>
                 <Button
