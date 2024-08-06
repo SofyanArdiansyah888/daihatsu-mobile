@@ -1,4 +1,5 @@
 import exp from "node:constants";
+import CheckpointEntity from "./checkpoint.entity";
 
 export default interface ShiftEntity{
     id: number
@@ -14,6 +15,7 @@ export default interface ShiftEntity{
 export interface CheckpointHistory{
     id: number
     id_shift: string;
+    checkpoint: CheckpointEntity;
     id_checkpoint: string;
     id_user:string;
     group_hour: string;

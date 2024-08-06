@@ -23,9 +23,7 @@ export default function UpdatePasswordPage() {
         history.replace("/profil")
     }
 
-    function handleItemClick(){
-        history.replace("checkpoint/history")
-    }
+
 
     function handleSubmit(){
 
@@ -33,7 +31,7 @@ export default function UpdatePasswordPage() {
 
     return <IonPage>
         <IonContent scrollY={true}>
-            <main className={"px-4 py-6 "}>
+            <main className={"px-4 py-2 "}>
                 <NavHeader handleClick={handleBack} title={"Update Password"} />
 
                 <Form

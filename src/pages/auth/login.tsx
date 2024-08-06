@@ -15,12 +15,12 @@ export default function LoginPage() {
         name: 'login',
         endpoint: '/login',
         withMessage: false,
-        onSuccess: async (data:any) => {
+        onSuccess: async (data: any) => {
             auth.login(data)
             history.push("/beranda")
         },
-        onError: async (error:any) => {
-            if(error?.response?.status === 500){
+        onError: async (error: any) => {
+            if (error?.response?.status === 500) {
                 await message.error("Tidak dapat menghubungi server!")
                 return
             }
@@ -36,11 +36,6 @@ export default function LoginPage() {
     return <AuthLayout
         headerText={"Login"}
         headerIcon={<SlackOutlined className={"text-red-500 text-[96px]"}/>}
-        // footerIcon={<img
-        //     src={"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS-1vifkvbyOEZFb0YRoH_EZLSuNWEjiTgKYg&s"}
-        //     className={"absolute bottom-4 text-red-500 w-full h-32 aspect-video "}
-        //     alt={"Footer Logo"}
-        // />}
     >
         <Form
             form={form}

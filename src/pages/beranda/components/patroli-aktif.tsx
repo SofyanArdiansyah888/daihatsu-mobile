@@ -2,12 +2,19 @@ import {Button} from "antd";
 import {SecurityScanOutlined} from "@ant-design/icons";
 import React from "react";
 import {useHistory} from "react-router";
+import {useGetList} from "../../../hooks/useApi";
+import {ResponseListType} from "../../../lib/interface/response-type";
+import CheckpointEntity from "../../../entities/checkpoint.entity";
+import ShiftEntity from "../../../entities/shift.entity";
 
-export default function PatroliAktif() {
+export default function PatroliAktif({activeShift}: { activeShift: ShiftEntity | undefined }) {
     const history = useHistory()
-    function handlePatroliClick(){
-        history.replace("/patroli/checkpoint")
+
+
+    function handlePatroliClick() {
+        if (activeShift) history.replace(`/patroli/checkpoint?id_shift=${activeShift.id}`)
     }
+
     return <div
         className={"flex justify-between items-center my-4 bg-[#f5222d] px-4 py-3 rounded-2xl text-white"}
         onClick={handlePatroliClick}
@@ -23,8 +30,8 @@ export default function PatroliAktif() {
                 type={"primary"}
             />
             <div>
-                <p className={"font-semibold"}>Shift Sementara Berjalan</p>
-                <p className={"text-xs"}>Shift Siang 1</p>
+                <p className={"font-semibold"}>Shift Berjalan</p>
+                <p className={"text-xs"}>{activeShift ? activeShift?.shift : "Tidak ada shift berjalan"}</p>
             </div>
         </div>
         <div>

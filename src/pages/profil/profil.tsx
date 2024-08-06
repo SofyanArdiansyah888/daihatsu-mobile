@@ -1,37 +1,46 @@
 import {IonContent, IonPage} from "@ionic/react";
-import {Avatar, Button} from "antd";
-import {
-    ArrowLeftOutlined,
-    LockOutlined,
-    LogoutOutlined,
-    ProfileOutlined,
-    RightOutlined,
-    UserOutlined,
-    HomeOutlined
-} from "@ant-design/icons";
+import {Avatar, Button, Modal} from "antd";
+import {HomeOutlined, LockOutlined, LogoutOutlined, RightOutlined, UserOutlined,} from "@ant-design/icons";
 import React from "react";
 import {useHistory} from "react-router";
+import {useAuth} from "../../providers/AuthProvider";
 
+const {confirm} = Modal;
 export default function ProfilPage() {
     const history = useHistory()
+    const {user, logout} = useAuth()
 
     function handleLogout() {
-        history.replace('/login')
+        confirm({
+            title: 'Kamu yakin ingin keluar ?',
+            okText: 'Ya',
+            okType: 'danger',
+            cancelText: 'Tidak',
+            onOk: () => logout(),
+        })
     }
 
     function handleBerandaClick() {
         history.replace('/beranda')
     }
 
+    function handleUpdatePasswordClick(){
+        history.replace("/profil/update-password")
+    }
+
+    function handleUpdateProfilClick(){
+        history.replace("/profil/update-profil")
+    }
+
     return <IonPage>
         <IonContent scrollY={true}>
-            <main className={"px-4 py-6 "}>
+            <main className={"px-4 py-2 "}>
 
                 <header className={"text-center mb-12"}>
                     <Avatar size={64} icon={<UserOutlined/>}/>
                     <div className={"space-y-1 mt-4"}>
-                        <p className={"text-sm font-bold"}>Sofyan Ardiansyah</p>
-                        <p className={"text-xs "}>sofyanardiansyah888@gmail.com</p>
+                        <p className={"text-sm font-bold capitalize"}>{user?.fullname}</p>
+                        <p className={"text-xs "}>{["", null, undefined].includes(user?.email) ? "Email belum tersedia" : user?.email}</p>
                     </div>
                 </header>
 
@@ -40,17 +49,13 @@ export default function ProfilPage() {
                     <Item
                         text={"Update Password"}
                         icon={<LockOutlined/>}
-                        handleClick={() => {
-                            history.replace("/profil/update-password")
-                        }}
+                        handleClick={handleUpdatePasswordClick}
                     />
 
                     <Item
                         text={"Update Profil"}
                         icon={<UserOutlined/>}
-                        handleClick={() => {
-                            history.replace("/profil/update-profil")
-                        }}
+                        handleClick={handleUpdateProfilClick}
                     />
 
                     <Item

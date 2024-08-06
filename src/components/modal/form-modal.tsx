@@ -33,8 +33,7 @@ export default function FormModal<T>({
                                          onSubmit,
                                          scrollArea = false,
                                          sectionClass,
-                                         modalClass,
-                                         loading = false
+                                         modalClass
                                      }: IFormModal<T>) {
     const [formInstance, setFormInstance] = useState<FormInstance>();
     useEffect(() => {
