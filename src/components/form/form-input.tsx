@@ -22,6 +22,7 @@ interface IFormSelect {
     size?: SizeType,
     rules?: RuleObject[] | RuleRender[],
     layout?: FormItemLayout
+    dependencies?: string[]
 }
 
 export default function FormInput({
@@ -35,9 +36,11 @@ export default function FormInput({
                                       help,
                                       disabled = false,
                                       size = "middle",
-                                      layout = "vertical"
+                                      layout = "vertical",
+                                      dependencies = []
                                   }: IFormSelect) {
-    return <Form.Item name={name} label={label} layout={layout} help={help} rules={rules} className={"!capitalize"}>
+    return <Form.Item name={name} label={label} layout={layout} help={help} rules={rules} dependencies={dependencies}
+                      className={"!capitalize"}>
         {
             type === "number" ?
                 <InputNumber

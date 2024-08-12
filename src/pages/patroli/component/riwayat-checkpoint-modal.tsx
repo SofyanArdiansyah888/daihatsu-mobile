@@ -34,9 +34,8 @@ export default function RiwayatCheckpointModal({isOpen, handleGroupModal, select
     })
 
     const {mutate: update, isPending: updateLoading} = usePut({
-        id: selectedData?.id,
         name: 'shift',
-        endpoint: '/shift',
+        endpoint: `/shift/${selectedData?.id}`,
         onSuccess: async () => {
             handleGroupModal("modal", false)
         }
