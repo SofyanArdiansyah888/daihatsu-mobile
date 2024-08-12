@@ -14,7 +14,6 @@ export default function LoginPage() {
     const {mutate, isPending} = usePost({
         name: 'login',
         endpoint: '/login',
-        withMessage: false,
         onSuccess: async (data: any) => {
             auth.login(data)
             history.push("/beranda")

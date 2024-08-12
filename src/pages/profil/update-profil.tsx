@@ -13,10 +13,8 @@ export default function UpdateProfilPage() {
     const {user, setUser} = useAuth()
 
     const {mutate: update, isPending} = usePut({
-        id: user?.id,
         name: 'user',
-        endpoint: '/user',
-        withMessage:false,
+        endpoint: `/user/${user?.id}`,
         onSuccess: async ({data}: any) => {
             setUser(data)
             message.success("Berhasil mengupdate profil!")
