@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 
-import {createContext, Dispatch, useContext, useMemo} from "react";
+import {createContext, useContext, useMemo} from "react";
 import {useHistory} from "react-router";
 import {useLocalStorage} from "../hooks/useLocalStorage";
 import UserEntity from "../entities/user.entity";
