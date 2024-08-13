@@ -37,7 +37,7 @@ export default function CheckpointHistoryPage() {
 
 
     function handleBack() {
-        history.replace(`/patroli/checkpoint?id_shift=${queryParams.get("id_shift")}`)
+        history.replace(`/checkpoint?id_shift=${queryParams.get("id_shift")}`)
     }
 
     function handleItemClick() {
@@ -75,8 +75,9 @@ export default function CheckpointHistoryPage() {
             >
                 <IonRefresherContent></IonRefresherContent>
             </IonRefresher>
-            <main className={"px-4 py-2 "}>
-                <NavHeader handleClick={handleBack} title={"Detail Checkpoint"}/>
+            <NavHeader handleClick={handleBack} title={"Detail Checkpoint"}/>
+            <main className={"px-4"}>
+
                 {
                     isLoading ? <SkeletonLoading/> :
                         <section>

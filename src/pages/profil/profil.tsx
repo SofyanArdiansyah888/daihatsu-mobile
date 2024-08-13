@@ -20,16 +20,13 @@ export default function ProfilPage() {
         })
     }
 
-    function handleBerandaClick() {
-        history.replace('/beranda')
+
+    function handleUpdatePasswordClick() {
+        history.replace("/update-password")
     }
 
-    function handleUpdatePasswordClick(){
-        history.replace("/profil/update-password")
-    }
-
-    function handleUpdateProfilClick(){
-        history.replace("/profil/update-profil")
+    function handleUpdateProfilClick() {
+        history.replace("/update-profil")
     }
 
     return <IonPage>
@@ -44,7 +41,7 @@ export default function ProfilPage() {
                     </div>
                 </header>
 
-                <section className={"divide-y-[1px] space-y-2 py-2"}>
+                <section className={" space-y-2 py-2"}>
 
                     <Item
                         text={"Update Password"}
@@ -56,12 +53,6 @@ export default function ProfilPage() {
                         text={"Update Profil"}
                         icon={<UserOutlined/>}
                         handleClick={handleUpdateProfilClick}
-                    />
-
-                    <Item
-                        text={"Beranda"}
-                        icon={<HomeOutlined/>}
-                        handleClick={handleBerandaClick}
                     />
 
                     <Item
@@ -99,11 +90,11 @@ function Item({
 
         </div>
         <div>
-            <Button
-                icon={<RightOutlined/>}
-                type={"text"}
-                size={"middle"}
-            />
+            {/*<Button*/}
+            {/*    icon={<RightOutlined/>}*/}
+            {/*    type={"primary"}*/}
+            {/*    size={"middle"}*/}
+            {/*/>*/}
         </div>
     </div>
 }

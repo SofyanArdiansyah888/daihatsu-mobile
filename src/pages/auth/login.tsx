@@ -16,7 +16,7 @@ export default function LoginPage() {
         endpoint: '/login',
         onSuccess: async (data: any) => {
             auth.login(data)
-            history.push("/beranda")
+            history.replace("/beranda")
         },
         onError: async (error: any) => {
             if (error?.response?.status === 500) {

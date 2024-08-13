@@ -29,7 +29,7 @@ export default function CheckpointPage() {
     }
 
     function handleItemClick(item: CheckpointEntity) {
-        history.replace(`checkpoint/history?id_checkpoint=${item.id}&id_shift=${queryParams.get('id_shift')}`)
+        history.replace(`checkpoint-history?id_checkpoint=${item.id}&id_shift=${queryParams.get('id_shift')}`)
     }
 
     function handleMapClick() {
@@ -51,11 +51,12 @@ export default function CheckpointPage() {
             >
                 <IonRefresherContent></IonRefresherContent>
             </IonRefresher>
-            <main className={"px-4 py-2 "}>
-                <NavHeader handleClick={handleBack} title={"Checkpoint"}/>
+
+            <NavHeader handleClick={handleBack} title={"Checkpoint"}/>
+            <main className={"px-4"}>
                 {
                     isLoading ? <SkeletonLoading/> :
-                        <section className={"divide-y-[1px] space-y-2 py-2"}>
+                        <section className={" space-y-2 py-2"}>
                             {
                                 data?.data?.map((item: CheckpointEntity) =>
                                     <div

@@ -12,11 +12,15 @@ import ProfilPage from "../pages/profil/profil";
 import UpdatePasswordPage from "../pages/profil/update-password";
 import UpdateProfilPage from "../pages/profil/update-profil";
 import CheckpointHistoryPage from "../pages/patroli/riwayat-checkpoint";
+import {HomeOutlined, HistoryOutlined,UserOutlined,SafetyOutlined} from "@ant-design/icons";
+import CheckpointPage from "../pages/patroli/checkpoint";
 
 const PagesWithoutNavBar = [
     "/login",
-    "/ubah-password",
-    "/informasi-dasar",
+    "/update-password",
+    "/update-profil",
+    "/checkpoint",
+    "/checkpoint-history",
 ];
 
 const MainTabs: React.FC = () => {
@@ -43,9 +47,9 @@ const MainTabs: React.FC = () => {
     }, [ionRouter]);
 
     const styles = {
-        tabBar: `p-2 bg-zinc-50 rounded-full my-2 mx-2  `,
-        tabButton: `bg-zinc-50`, //`font-black text-black focus:text-red-700`,
-        tabLabel: ` text-xs mt-1`,
+        tabBar: ` bg-gray-100 rounded-xl mx-3 mb-3  `,
+        tabButton: `bg-gray-100 space-y-1.5`, //`font-black text-black focus:text-red-700`,
+        tabLabel: ` text-[10px] mt-1`,
     };
 
     return (
@@ -57,7 +61,7 @@ const MainTabs: React.FC = () => {
                     href="/beranda"
                     className={styles.tabButton}
                 >
-                    {/*<HomeIcon strokeWidth={1} />*/}
+                    <HomeOutlined className={"text-lg"}  />
                     <IonLabel className={styles.tabLabel}>Beranda</IonLabel>
                 </IonTabButton>
 
@@ -66,8 +70,8 @@ const MainTabs: React.FC = () => {
                     href="/absensi"
                     className={styles.tabButton}
                 >
-                    {/*<HistoryIcon strokeWidth={1} />*/}
-                    <IonLabel className={styles.tabLabel}>Presensi</IonLabel>
+                    <HistoryOutlined className={"text-lg"} />
+                    <IonLabel className={styles.tabLabel}>Jadwal</IonLabel>
                 </IonTabButton>
 
                 <IonTabButton
@@ -75,17 +79,17 @@ const MainTabs: React.FC = () => {
                     href="/aktifitas"
                     className={styles.tabButton}
                 >
-                    {/*<FileClockIcon strokeWidth={1} />*/}
-                    <IonLabel className={styles.tabLabel}>Aktifitas</IonLabel>
+                    <SafetyOutlined className={"text-lg"}/>
+                    <IonLabel className={styles.tabLabel}>P. Warga</IonLabel>
                 </IonTabButton>
 
                 <IonTabButton tab="gaji" href="/gaji" className={styles.tabButton}>
-                    {/*<BanknoteIcon strokeWidth={1} />*/}
-                    <IonLabel className={styles.tabLabel}>Gaji</IonLabel>
+                    <SafetyOutlined className={"text-lg"}/>
+                    <IonLabel className={styles.tabLabel}>P. Security</IonLabel>
                 </IonTabButton>
 
                 <IonTabButton tab="profil" href="/profil" className={styles.tabButton}>
-                    {/*<ContactIcon strokeWidth={1} />*/}
+                    <UserOutlined className={"text-lg"}  />
                     <IonLabel className={styles.tabLabel}>Profil</IonLabel>
                 </IonTabButton>
             </IonTabBar>
@@ -118,7 +122,7 @@ const MainTabs: React.FC = () => {
                 />
 
                 <Route
-                    path="/profil/update-password"
+                    path="/update-password"
                     render={() => (
                         <ProtectedRoute>
                             <UpdatePasswordPage/>
@@ -128,14 +132,21 @@ const MainTabs: React.FC = () => {
 
 
                 <Route
-                    path="/profil/update-profil"
+                    path="/update-profil"
                     render={() => (<ProtectedRoute>
                         <UpdateProfilPage/>
                     </ProtectedRoute>)}
                 />
 
                 <Route
-                    path="/patroli/checkpoint/history"
+                    path="/checkpoint"
+                    render={() => (<ProtectedRoute>
+                        <CheckpointPage/>
+                    </ProtectedRoute>)}
+                />
+
+                <Route
+                    path="/checkpoint-history"
                     render={() => (<ProtectedRoute>
                         <CheckpointHistoryPage/>
                     </ProtectedRoute>)}

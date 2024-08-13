@@ -6,9 +6,10 @@ import JadwalSecurityEntity from "../../../entities/jadwal-security";
 import moment from "moment/moment";
 import SkeletonLoading from "../../../components/skeleton-loading";
 
-export default function RiwayatPatroli({isLoading, data}: {
+export default function RiwayatPatroli({isLoading, data, title}: {
     isLoading: boolean,
     data: JadwalSecurityEntity[] | undefined,
+    title: string
 
 }) {
     const {filterPayload} = useBerandaStore()
@@ -26,17 +27,18 @@ export default function RiwayatPatroli({isLoading, data}: {
             setSelectedItem(undefined)
         }
     }, [isOpen]);
-    return <section className={"space-y-2 mt-8"}>
+    return <section className={"space-y-2"}>
 
 
         <div className={"flex justify-between"}>
-            <h1 className={"font-bold text-md"}>Riwayat Patroli</h1>
-            <FiterTanggal/>
+            <h1 className={"font-semibold text-md capitalize"}>{title}</h1>
+            {/*<FiterTanggal/>*/}
         </div>
+        <hr className={"border-[1px] rounded-full border-red-500"}/>
 
         {
             isLoading ? <SkeletonLoading/> :
-                <div className={"divide-y-[1px]"}>
+                <div className={""}>
                     {
                         data?.map((item, index) =>
                             <div

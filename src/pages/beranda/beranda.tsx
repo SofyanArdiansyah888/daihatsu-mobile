@@ -27,7 +27,11 @@ export default function BerandaPage() {
         }
     })
 
-    const {data, isLoading:isLoadingRiwayat,refetch:refectRiwayat} = useGetList<ResponseListType<JadwalSecurityEntity[]>>
+    const {
+        data,
+        isLoading: isLoadingRiwayat,
+        refetch: refectRiwayat
+    } = useGetList<ResponseListType<JadwalSecurityEntity[]>>
     ({
         name: 'laporan-patroli',
         endpoint: "/laporan-patroli",
@@ -67,11 +71,11 @@ export default function BerandaPage() {
                         </div>
                     </div>
                     <div>
-                        <Button
-                            icon={<UserOutlined/>}
-                            type={"text"}
-                            onClick={handleLogout}
-                        />
+                        {/*<Button*/}
+                        {/*    icon={<UserOutlined/>}*/}
+                        {/*    type={"text"}*/}
+                        {/*    onClick={handleLogout}*/}
+                        {/*/>*/}
                     </div>
                 </div>
 
@@ -79,10 +83,19 @@ export default function BerandaPage() {
                     activeShift={activeShift?.data}
                 />
 
-                <RiwayatPatroli
-                    data={data?.data}
-                    isLoading={isLoadingRiwayat}
-                />
+                <div className={"space-y-10 mt-12"}>
+                    <RiwayatPatroli
+                        title={"Shift Berjalan"}
+                        data={data?.data}
+                        isLoading={isLoadingRiwayat}
+                    />
+
+                    <RiwayatPatroli
+                        title={"Shift Warga"}
+                        data={data?.data}
+                        isLoading={isLoadingRiwayat}
+                    />
+                </div>
 
             </main>
 

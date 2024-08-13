@@ -13,6 +13,15 @@
         overflow-y: auto;
     }
 }
+ion-tab-button {
+    --color-selected: #ff4d4f;
+    --color: #374151;
+}
+
+ion-tabs{
+    background-color: white;
+}
+
 .ant-form-item{
     @apply !my-0
 }
