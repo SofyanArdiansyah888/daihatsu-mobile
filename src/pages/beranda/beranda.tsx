@@ -5,11 +5,10 @@ import {UserOutlined} from "@ant-design/icons"
 import RiwayatPatroli from "./components/riwayat-patroli";
 import PatroliAktif from "./components/patroli-aktif";
 import {useHistory} from "react-router";
-import {useAuth} from "../../providers/AuthProvider";
+import {useAuth} from "../../providers/auth-provider";
 import moment from "moment/moment";
 import {useGetList} from "../../hooks/useApi";
 import {ResponseListType} from "../../lib/interface/response-type";
-import CheckpointEntity from "../../entities/checkpoint.entity";
 import ShiftEntity from "../../entities/shift.entity";
 import JadwalSecurityEntity from "../../entities/jadwal-security";
 
@@ -19,7 +18,7 @@ export default function BerandaPage() {
     const {user} = useAuth()
 
 
-    const {data: activeShift, isLoading, refetch} = useGetList<ResponseListType<ShiftEntity>>
+    const {data: activeShift, refetch} = useGetList<ResponseListType<ShiftEntity>>
     ({
         name: 'shift-active',
         endpoint: "/active-shift",

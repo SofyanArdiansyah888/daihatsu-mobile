@@ -4,7 +4,7 @@ import {Button, Form, message} from "antd";
 import AuthLayout from "../../components/layout/auth-layout";
 import {useHistory} from "react-router";
 import {usePost} from "../../hooks/useApi";
-import {useAuth} from "../../providers/AuthProvider";
+import {useAuth} from "../../providers/auth-provider";
 
 
 export default function LoginPage() {

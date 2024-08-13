@@ -3,7 +3,7 @@ import {Avatar, Button, Modal} from "antd";
 import {HomeOutlined, LockOutlined, LogoutOutlined, RightOutlined, UserOutlined,} from "@ant-design/icons";
 import React from "react";
 import {useHistory} from "react-router";
-import {useAuth} from "../../providers/AuthProvider";
+import {useAuth} from "../../providers/auth-provider";
 
 const {confirm} = Modal;
 export default function ProfilPage() {

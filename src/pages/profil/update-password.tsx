@@ -5,7 +5,7 @@ import {useHistory} from "react-router";
 import NavHeader from "../../components/nav-header";
 import FormInput from "../../components/form/form-input";
 import {usePut} from "../../hooks/useApi";
-import {useAuth} from "../../providers/AuthProvider";
+import {useAuth} from "../../providers/auth-provider";
 
 
 export default function UpdatePasswordPage() {

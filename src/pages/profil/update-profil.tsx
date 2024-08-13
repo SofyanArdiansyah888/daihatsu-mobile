@@ -1,11 +1,11 @@
 import {Button, Form, message} from "antd";
-import {useHistory, useParams} from "react-router";
+import {useHistory} from "react-router";
 import {usePut} from "../../hooks/useApi";
 import {IonContent, IonPage} from "@ionic/react";
 import NavHeader from "../../components/nav-header";
 import FormInput from "../../components/form/form-input";
 import React, {useEffect} from "react";
-import {useAuth} from "../../providers/AuthProvider";
+import {useAuth} from "../../providers/auth-provider";
 
 export default function UpdateProfilPage() {
     const [form] = Form.useForm();

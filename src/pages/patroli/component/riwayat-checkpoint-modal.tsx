@@ -1,16 +1,13 @@
 import {Dispatch, useEffect, useState} from "react";
 import {Form, FormInstance, Image} from "antd";
-
-import moment from "moment/moment";
 import {usePost, usePut} from "../../../hooks/useApi";
 import FormModal from "../../../components/modal/form-modal";
 import ShiftEntity from "../../../entities/shift.entity";
 import FormTextarea from "../../../components/form/form-textarea";
-import {PlusCircleOutlined, DeleteOutlined} from "@ant-design/icons";
+import {DeleteOutlined, PlusCircleOutlined} from "@ant-design/icons";
 import {Camera, CameraResultType, CameraSource} from "@capacitor/camera";
-import {image} from "ionicons/icons";
 import {useLocation} from "react-router";
-import {useAuth} from "../../../providers/AuthProvider";
+import {useAuth} from "../../../providers/auth-provider";
 
 interface IPropsModal {
     selectedData: ShiftEntity | undefined,
