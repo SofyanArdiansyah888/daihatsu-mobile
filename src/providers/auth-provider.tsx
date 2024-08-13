@@ -31,14 +31,14 @@ export const AuthProvider = ({children}: IAuthProvider) => {
     // call this function when you want to authenticate the user
     const login = async (data: UserEntity) => {
         setUser(data);
-        if (history) history.replace("/beranda");
+        if (history) history.push("/beranda");
     };
 
 
     // call this function to sign out logged in user
     const logout = () => {
         setUser(null);
-        if (history) history.replace("/login");
+        if (history) history.push("/login");
     };
 
     const value: IValue = useMemo(

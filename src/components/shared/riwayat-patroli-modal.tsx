@@ -1,8 +1,8 @@
 import {Descriptions, Form, Modal} from "antd";
 import React from "react";
-import CheckpointItem from "../../../components/item/checkpoint-item";
-import CheckpointHistoryEntity from "../../../entities/checkpoint-history";
-import JadwalSecurityEntity from "../../../entities/jadwal-security";
+import CheckpointItem from "../item/checkpoint-item";
+import CheckpointHistoryEntity from "../../entities/checkpoint-history";
+import JadwalSecurityEntity from "../../entities/jadwal-security";
 import moment from "moment/moment";
 
 interface GroupedData {
@@ -18,8 +18,6 @@ export default function RiwayatPatroliModal({
     setIsOpen: React.Dispatch<React.SetStateAction<boolean>>,
     selectedItem: any
 }) {
-    console.log({selectedItem})
-
     function groupByCheckpoint(): { group_checkpoint: string, items: CheckpointHistoryEntity[] }[] {
         const groupedData = selectedItem?.shift?.checkpoint_history?.reduce((result: GroupedData, item: any) => {
             const key = item?.checkpoint.checkpoint;
@@ -35,8 +33,6 @@ export default function RiwayatPatroliModal({
             items: groupedData![key]
         }));
     }
-
-    console.log("GROUPED", groupByCheckpoint())
     return <Modal
         title={"Detail Riwayat"}
         open={isOpen}

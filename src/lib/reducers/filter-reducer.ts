@@ -13,9 +13,10 @@ export interface IFilterReducer<T> {
     deleteFilterPayload: (name: string) => void,
 }
 
-export default function filterReducer(set: any) {
+export default function filterReducer(set: any,filterPayload?: any) {
     return {
         filterPayload: {},
+        ...filterPayload,
         changeFilterPayload: (payload: any) => {
             set(() => ({
                 filterPayload: {...payload},

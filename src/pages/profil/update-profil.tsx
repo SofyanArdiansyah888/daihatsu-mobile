@@ -19,7 +19,7 @@ export default function UpdateProfilPage() {
             setUser(data)
             message.success("Berhasil mengupdate profil!")
         },
-        onError:() => {
+        onError: async () => {
             message.error("Gagal mengupdate profil!")
         }
     })
@@ -43,8 +43,9 @@ export default function UpdateProfilPage() {
 
     return <IonPage>
         <IonContent scrollY={true}>
+            <NavHeader handleClick={handleBack} title={"Update Profil"}/>
             <main className={"px-4 py-2 "}>
-                <NavHeader handleClick={handleBack} title={"Update Profil"}/>
+
 
                 <Form
                     form={form}

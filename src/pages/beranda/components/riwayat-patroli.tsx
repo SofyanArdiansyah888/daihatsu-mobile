@@ -1,7 +1,5 @@
 import React, {useEffect, useState} from "react";
-import FiterTanggal from "./filter-tanggal";
-import useBerandaStore from "../data/useBerandaStore";
-import RiwayatPatroliModal from "./riwayat-patroli-modal";
+import RiwayatPatroliModal from "../../../components/shared/riwayat-patroli-modal";
 import JadwalSecurityEntity from "../../../entities/jadwal-security";
 import moment from "moment/moment";
 import SkeletonLoading from "../../../components/skeleton-loading";
@@ -12,8 +10,6 @@ export default function RiwayatPatroli({isLoading, data, title}: {
     title: string
 
 }) {
-    const {filterPayload} = useBerandaStore()
-
     const [isOpen, setIsOpen] = useState(false);
     const [selectedItem, setSelectedItem] = useState<JadwalSecurityEntity>()
 
@@ -32,7 +28,6 @@ export default function RiwayatPatroli({isLoading, data, title}: {
 
         <div className={"flex justify-between"}>
             <h1 className={"font-semibold text-md capitalize"}>{title}</h1>
-            {/*<FiterTanggal/>*/}
         </div>
         <hr className={"border-[1px] rounded-full border-red-500"}/>
 

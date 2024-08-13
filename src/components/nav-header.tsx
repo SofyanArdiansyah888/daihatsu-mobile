@@ -8,7 +8,7 @@ export default function NavHeader({
                                       withBackButton = true,
                                       icon
                                   }: {
-                                      handleClick: () => void,
+                                      handleClick?: () => void,
                                       title: string,
                                       withBackButton?: boolean,
                                       icon?: React.ReactNode,
@@ -25,7 +25,7 @@ export default function NavHeader({
                     />
                 </div>
             }
-            <div>
+            <div className={`${!withBackButton ? "px-2" : ""}`}>
                 <p className={"font-semibold capitalize"}>{title}</p>
             </div>
         </div>

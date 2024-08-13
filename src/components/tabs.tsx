@@ -14,6 +14,9 @@ import UpdateProfilPage from "../pages/profil/update-profil";
 import CheckpointHistoryPage from "../pages/patroli/riwayat-checkpoint";
 import {HomeOutlined, HistoryOutlined,UserOutlined,SafetyOutlined} from "@ant-design/icons";
 import CheckpointPage from "../pages/patroli/checkpoint";
+import PatroliSecurityPage from "../pages/patroli-security/patroli-security";
+import PatroliWargaPage from "../pages/patroli-warga/patroli-warga";
+import JadwalPage from "../pages/jadwal/jadwal";
 
 const PagesWithoutNavBar = [
     "/login",
@@ -66,8 +69,8 @@ const MainTabs: React.FC = () => {
                 </IonTabButton>
 
                 <IonTabButton
-                    tab="absensi"
-                    href="/absensi"
+                    tab="jadwal"
+                    href="/jadwal"
                     className={styles.tabButton}
                 >
                     <HistoryOutlined className={"text-lg"} />
@@ -75,17 +78,17 @@ const MainTabs: React.FC = () => {
                 </IonTabButton>
 
                 <IonTabButton
-                    tab="aktifitas"
-                    href="/aktifitas"
+                    tab="patroli-warga"
+                    href="/patroli-warga"
                     className={styles.tabButton}
                 >
                     <SafetyOutlined className={"text-lg"}/>
-                    <IonLabel className={styles.tabLabel}>P. Warga</IonLabel>
+                    <IonLabel className={styles.tabLabel}>Warga</IonLabel>
                 </IonTabButton>
 
-                <IonTabButton tab="gaji" href="/gaji" className={styles.tabButton}>
+                <IonTabButton tab="patroli-security" href="/patroli-security" className={styles.tabButton}>
                     <SafetyOutlined className={"text-lg"}/>
-                    <IonLabel className={styles.tabLabel}>P. Security</IonLabel>
+                    <IonLabel className={styles.tabLabel}>Security</IonLabel>
                 </IonTabButton>
 
                 <IonTabButton tab="profil" href="/profil" className={styles.tabButton}>
@@ -108,6 +111,33 @@ const MainTabs: React.FC = () => {
                     render={() => (
                         <ProtectedRoute>
                             <BerandaPage/>
+                        </ProtectedRoute>
+                    )}
+                />
+
+                <Route
+                    path="/jadwal"
+                    render={() => (
+                        <ProtectedRoute>
+                            <JadwalPage/>
+                        </ProtectedRoute>
+                    )}
+                />
+
+                <Route
+                    path="/patroli-security"
+                    render={() => (
+                        <ProtectedRoute>
+                            <PatroliSecurityPage/>
+                        </ProtectedRoute>
+                    )}
+                />
+
+                <Route
+                    path="/patroli-warga"
+                    render={() => (
+                        <ProtectedRoute>
+                            <PatroliWargaPage/>
                         </ProtectedRoute>
                     )}
                 />

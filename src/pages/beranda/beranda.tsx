@@ -14,10 +14,7 @@ import JadwalSecurityEntity from "../../entities/jadwal-security";
 
 
 export default function BerandaPage() {
-    const history = useHistory()
     const {user} = useAuth()
-
-
     const {data: activeShift, refetch} = useGetList<ResponseListType<ShiftEntity>>
     ({
         name: 'shift-active',
@@ -35,14 +32,9 @@ export default function BerandaPage() {
     ({
         name: 'laporan-patroli',
         endpoint: "/laporan-patroli",
-        params: {
-            // ...params,
-        }
+        params: {}
     })
 
-    function handleLogout() {
-        history.replace('/profil')
-    }
 
     return <IonPage>
         <IonContent scrollY={true}>

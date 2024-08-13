@@ -6,7 +6,7 @@ export const ProtectedRoute = ({ children }: { children: JSX.Element }) => {
   
   if (!user) {
     // user is not authenticated
-    // window.location.reload();
+    window.location.reload();
     return <Redirect push to="/login" />;
   }
   return children;
