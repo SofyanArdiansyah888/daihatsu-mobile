@@ -16,7 +16,7 @@ import SkeletonLoading from "../../components/skeleton-loading";
 import moment from "moment/moment";
 
 
-export default function CheckpointHistoryPage() {
+export default function RiwayatPatroliPage() {
     const history = useHistory()
     const {groupModal, handleGroupModal} = useGroupModal({
         modal: false,
@@ -37,7 +37,7 @@ export default function CheckpointHistoryPage() {
 
 
     function handleBack() {
-        history.replace(`/checkpoint?id_shift=${queryParams.get("id_shift")}`)
+        history.replace(`/checkpoint-patroli?id_shift=${queryParams.get("id_shift")}`)
     }
 
     function handleItemClick() {
