@@ -11,7 +11,7 @@ export interface IFormSelectValue {
 }
 
 interface IFormSelect {
-    type?: "number" | "text" | "password",
+    type?: "number" | "text" | "password" | "float",
     name: string | number | (string | number)[],
     label: string,
     value?: string,
@@ -20,9 +20,7 @@ interface IFormSelect {
     disabled?: boolean,
     help?: string,
     size?: SizeType,
-    rules?: RuleObject[] | RuleRender[],
-    layout?: FormItemLayout
-    dependencies?: string[]
+    rules?: RuleObject[] | RuleRender[]
 }
 
 export default function FormInput({
@@ -35,12 +33,9 @@ export default function FormInput({
                                       type = "text",
                                       help,
                                       disabled = false,
-                                      size = "middle",
-                                      layout = "vertical",
-                                      dependencies = []
+                                      size = "middle"
                                   }: IFormSelect) {
-    return <Form.Item name={name} label={label} layout={layout} help={help} rules={rules} dependencies={dependencies}
-                      className={"!capitalize"}>
+    return <Form.Item name={name} label={label} help={help} rules={rules} className={"!capitalize"}>
         {
             type === "number" ?
                 <InputNumber
@@ -52,23 +47,23 @@ export default function FormInput({
                     value={value}
                     disabled={disabled}
                     size={size}
-
                 /> :
                 type === "password" ?
-                    <Input.Password onChange={onChange}
-                                    placeholder={placeholder}
-                                    value={value}
-                                    type={type}
-                                    disabled={disabled}
-                                    size={size}/> :
+                    <Input.Password onChange={onChange} placeholder={placeholder} value={value} type={type}
+                                    disabled={disabled} size={size}/> :
 
-                    <Input onChange={onChange}
-                           size={size}
-                           placeholder={placeholder}
-                           value={value}
-                           type={type}
-                           disabled={disabled}
-                    />
+                    type === "float" ?
+                        <InputNumber
+                            className={"w-full"}
+                            onChange={onChange}
+                            placeholder={placeholder}
+                            value={value}
+                            disabled={disabled}
+                            size={size}
+                        /> :
+
+                        <Input onChange={onChange} size={size} placeholder={placeholder} value={value} type={type}
+                               disabled={disabled}/>
         }
     </Form.Item>
 

@@ -11,7 +11,7 @@ import useURLParams from "../../hooks/useURLParams";
 import SkeletonLoading from "../../components/skeleton-loading";
 
 
-export default function CheckpointPage() {
+export default function CheckpointPatroliPage() {
     const history = useHistory()
     const {params, handleParamsChange} = useURLParams({})
     const queryParams = new URLSearchParams(useLocation().search)
@@ -29,7 +29,7 @@ export default function CheckpointPage() {
     }
 
     function handleItemClick(item: CheckpointEntity) {
-        history.replace(`checkpoint-history?id_checkpoint=${item.id}&id_shift=${queryParams.get('id_shift')}`)
+        history.replace(`riwayat-patroli?id_checkpoint=${item.id}&id_shift=${queryParams.get('id_shift')}`)
     }
 
     function handleMapClick() {
@@ -39,7 +39,6 @@ export default function CheckpointPage() {
     function handleCameraClick() {
 
     }
-
     return <IonPage>
         <IonContent scrollY={true}>
             <IonRefresher

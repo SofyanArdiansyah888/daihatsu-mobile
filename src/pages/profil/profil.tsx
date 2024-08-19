@@ -1,6 +1,6 @@
 import {IonContent, IonPage} from "@ionic/react";
 import {Avatar, Button, Modal} from "antd";
-import {HomeOutlined, LockOutlined, LogoutOutlined, RightOutlined, UserOutlined,} from "@ant-design/icons";
+import {LockOutlined, LogoutOutlined, UserOutlined,GlobalOutlined} from "@ant-design/icons";
 import React from "react";
 import {useHistory} from "react-router";
 import {useAuth} from "../../providers/auth-provider";
@@ -29,6 +29,10 @@ export default function ProfilPage() {
         history.replace("/update-profil")
     }
 
+    function handleCheckpointClick() {
+        history.replace("/checkpoint")
+    }
+
     return <IonPage>
         <IonContent scrollY={true}>
             <main className={"px-4 py-2 "}>
@@ -53,6 +57,12 @@ export default function ProfilPage() {
                         text={"Update Profil"}
                         icon={<UserOutlined/>}
                         handleClick={handleUpdateProfilClick}
+                    />
+
+                    <Item
+                        text={"Checkpoint"}
+                        icon={<GlobalOutlined/>}
+                        handleClick={handleCheckpointClick}
                     />
 
                     <Item

@@ -11,19 +11,21 @@ import "moment/locale/id";
 import ProfilPage from "../pages/profil/profil";
 import UpdatePasswordPage from "../pages/profil/update-password";
 import UpdateProfilPage from "../pages/profil/update-profil";
-import CheckpointHistoryPage from "../pages/patroli/riwayat-checkpoint";
-import {HomeOutlined, HistoryOutlined,UserOutlined,SafetyOutlined} from "@ant-design/icons";
-import CheckpointPage from "../pages/patroli/checkpoint";
+import RiwayatPatroliPage from "../pages/patroli/riwayat-patroli";
+import {HomeOutlined, HistoryOutlined,UserOutlined,SafetyOutlined,SettingOutlined} from "@ant-design/icons";
+import CheckpointPatroliPage from "../pages/patroli/checkpoint-patroli";
 import PatroliSecurityPage from "../pages/patroli-security/patroli-security";
 import PatroliWargaPage from "../pages/patroli-warga/patroli-warga";
 import JadwalPage from "../pages/jadwal/jadwal";
+import CheckpointPage from "../pages/checkpoint/checkpoint";
 
 const PagesWithoutNavBar = [
     "/login",
     "/update-password",
     "/update-profil",
+    "/checkpoint-patroli",
+    "/riwayat-patroli",
     "/checkpoint",
-    "/checkpoint-history",
 ];
 
 const MainTabs: React.FC = () => {
@@ -92,8 +94,8 @@ const MainTabs: React.FC = () => {
                 </IonTabButton>
 
                 <IonTabButton tab="profil" href="/profil" className={styles.tabButton}>
-                    <UserOutlined className={"text-lg"}  />
-                    <IonLabel className={styles.tabLabel}>Profil</IonLabel>
+                    <SettingOutlined className={"text-lg"}  />
+                    <IonLabel className={styles.tabLabel}>Pengaturan</IonLabel>
                 </IonTabButton>
             </IonTabBar>
 
@@ -160,6 +162,15 @@ const MainTabs: React.FC = () => {
                     )}
                 />
 
+                <Route
+                    path="/checkpoint"
+                    render={() => (
+                        <ProtectedRoute>
+                            <CheckpointPage/>
+                        </ProtectedRoute>
+                    )}
+                />
+
 
                 <Route
                     path="/update-profil"
@@ -169,16 +180,16 @@ const MainTabs: React.FC = () => {
                 />
 
                 <Route
-                    path="/checkpoint"
+                    path="/checkpoint-patroli"
                     render={() => (<ProtectedRoute>
-                        <CheckpointPage/>
+                        <CheckpointPatroliPage/>
                     </ProtectedRoute>)}
                 />
 
                 <Route
-                    path="/checkpoint-history"
+                    path="/riwayat-patroli"
                     render={() => (<ProtectedRoute>
-                        <CheckpointHistoryPage/>
+                        <RiwayatPatroliPage/>
                     </ProtectedRoute>)}
                 />
 
