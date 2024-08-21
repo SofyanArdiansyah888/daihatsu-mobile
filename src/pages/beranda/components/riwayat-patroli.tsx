@@ -3,6 +3,7 @@ import RiwayatPatroliModal from "../../../components/shared/riwayat-patroli-moda
 import JadwalSecurityEntity from "../../../entities/jadwal-security";
 import moment from "moment/moment";
 import SkeletonLoading from "../../../components/skeleton-loading";
+import EmptyData from "../../../components/empty-data";
 
 export default function RiwayatPatroli({isLoading, data, title}: {
     isLoading: boolean,
@@ -32,8 +33,9 @@ export default function RiwayatPatroli({isLoading, data, title}: {
         <hr className={"border-[1px] rounded-full border-red-500"}/>
 
         {
-            isLoading ? <SkeletonLoading/> :
+            isLoading ? <SkeletonLoading length={1}/> :
                 <div className={""}>
+                    <EmptyData data={data} />
                     {
                         data?.map((item, index) =>
                             <div

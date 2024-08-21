@@ -52,10 +52,10 @@ export default function CheckpointPatroliPage() {
             </IonRefresher>
 
             <NavHeader handleClick={handleBack} title={"Checkpoint"}/>
-            <main className={"px-4"}>
+            <main className={"p-4"}>
                 {
                     isLoading ? <SkeletonLoading/> :
-                        <section className={" space-y-2 py-2"}>
+                        <section className={" space-y-2"}>
                             {
                                 data?.data?.map((item: CheckpointEntity) =>
                                     <div

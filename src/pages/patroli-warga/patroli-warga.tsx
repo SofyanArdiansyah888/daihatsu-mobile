@@ -9,6 +9,7 @@ import usePatroliWargaStore from "./data/usePatroliWargaStore";
 import JadwalSecurityEntity from "../../entities/jadwal-security";
 import moment from "moment";
 import RiwayatPatroliModal from "../../components/shared/riwayat-patroli-modal";
+import EmptyData from "../../components/empty-data";
 
 
 export default function PatroliWargaPage() {
@@ -56,10 +57,14 @@ export default function PatroliWargaPage() {
                     changeFilterPayload={changeFilterPayload}
                 />}
             />
-            <main className={"px-4"}>
+            <main className={"p-4"}>
                 {
                     isLoading ? <SkeletonLoading/> :
-                        <section className={" space-y-2 py-2"}>
+                        <section className={" space-y-2"}>
+                            <EmptyData
+                                data={data?.data}
+                                fullscreen={true}
+                            />
                             {
                                 data?.data?.map((item: JadwalSecurityEntity, index) =>
                                     <div
