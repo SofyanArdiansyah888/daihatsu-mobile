@@ -22,7 +22,6 @@ export default function ApprovalModal({isOpen, setIsOpen, selectedData, setSelec
     const [form] = Form.useForm();
 
     const values = Form.useWatch([], form)
-    console.log("TANGGAL:",values?.tanggal?.format("YYYY-MM-DD"))
     const {mutate: create, isPending: createLoading} = usePost({
         name: 'tukar-shift',
         endpoint: '/tukar-shift',
