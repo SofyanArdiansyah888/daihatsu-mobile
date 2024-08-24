@@ -2,7 +2,7 @@ import exp from "node:constants";
 import CheckpointEntity from "./checkpoint.entity";
 
 export default interface ShiftEntity{
-    id: number
+    id: string
     shift: string;
     dari: string;
     sampai: string;

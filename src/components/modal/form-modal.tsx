@@ -1,10 +1,9 @@
 import React, {ReactNode, useEffect, useState} from "react";
-import {Form, FormInstance, Modal} from "antd";
+import {Button, Form, FormInstance, Modal} from "antd";
 import {Scrollbar} from "@radix-ui/react-scroll-area";
 
 import {cn} from "../../lib/utils";
 import {ScrollArea} from "../scroll-area";
-
 
 
 interface IFormModal<T> {
@@ -41,6 +40,7 @@ export default function FormModal<T>({
     }, [form]);
 
     async function handleOKModal() {
+        alert("HELLOW")
         try {
             const values = await formInstance?.validateFields();
             onSubmit(values)
@@ -60,6 +60,79 @@ export default function FormModal<T>({
         destroyOnClose
         className={`${cn("!w-[350px]", modalClass)}`}
         centered
+    >
+        {
+            scrollArea ?
+                <ScrollArea className={"h-fit"}>
+                    <SectionForm form={form} sectionClass={sectionClass}>
+                        {children}
+                    </SectionForm>
+                    <Scrollbar orientation={"vertical"}/>
+                </ScrollArea> :
+                <SectionForm form={form} sectionClass={sectionClass}>
+                    {children}
+                </SectionForm>
+        }
+    </Modal>
+}
+
+export function ApprovalFormModal<T>({
+                                         form,
+                                         title,
+                                         isOpen,
+                                         children,
+                                         setIsOpen,
+                                         confirmLoading,
+                                         onApprove,
+                                         onReject,
+                                         scrollArea = false,
+                                         sectionClass,
+                                         modalClass
+                                     }: IFormModal<T> & {
+    onApprove: (values: any) => void,
+    onReject: (values: any) => void,
+}) {
+    const [formInstance, setFormInstance] = useState<FormInstance>();
+    useEffect(() => {
+        setFormInstance(form);
+    }, [form]);
+
+    async function handleOKModal() {
+        try {
+            const values = await formInstance?.validateFields();
+            if (onApprove) onApprove(values)
+            if (onReject) onReject(values)
+        } catch (error) {
+            console.log('Failed:', error);
+        }
+    }
+
+    return <Modal
+        title={title}
+        open={isOpen}
+        confirmLoading={confirmLoading}
+        onCancel={() => setIsOpen(false)}
+        destroyOnClose
+        className={`${cn("!w-[350px]", modalClass)}`}
+        centered
+        footer={<div className={"flex gap-1 justify-end"}>
+            <Button
+                onClick={handleOKModal}
+                style={{
+                    backgroundColor: "#dc2626",
+                    color: "white",
+                    fontWeight: 400
+                }}
+            >Reject</Button>
+            <Button
+                onClick={handleOKModal}
+                style={{
+                    backgroundColor: "#16a34a",
+                    color: "white",
+                    fontWeight: 400
+                }}
+            >Approve</Button>
+        </div>}
     >
         {
             scrollArea ?

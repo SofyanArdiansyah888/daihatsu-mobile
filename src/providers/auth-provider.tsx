@@ -7,7 +7,7 @@ import UserEntity from "../entities/user.entity";
 
 
 const AuthContext = createContext<IValue>({
-    user: null,
+    user: undefined,
     login: null,
     logout: null,
     setUser: null
@@ -18,7 +18,7 @@ interface IAuthProvider {
 }
 
 interface IValue {
-    user: UserEntity | null;
+    user: UserEntity | undefined;
     login: any;
     logout: any;
     setUser: any;

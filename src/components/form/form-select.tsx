@@ -22,7 +22,8 @@ interface IFormSelect {
     rules?: RuleObject[] | RuleRender[],
     disabled?: boolean,
     size?: SizeType,
-    layout?: FormItemLayout
+    layout?: FormItemLayout,
+    loading?: boolean
 }
 
 export default function FormSelect({
@@ -37,7 +38,8 @@ export default function FormSelect({
                                        value,
                                        disabled,
                                        layout = "vertical",
-                                       size = "middle"
+                                       size = "middle",
+                                       loading = false
                                    }: IFormSelect) {
     return <Form.Item name={name} layout={layout} label={label} rules={rules} className={"!capitalize"}>
         <Select
@@ -51,9 +53,10 @@ export default function FormSelect({
             options={options}
             allowClear={true}
             placeholder={placeholder}
-            labelInValue={true}
+            labelInValue={false}
             disabled={disabled}
             size={size}
+            loading={loading}
         />
     </Form.Item>
 
