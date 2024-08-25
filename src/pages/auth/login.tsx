@@ -4,7 +4,7 @@ import {Button, Form, message} from "antd";
 import AuthLayout from "../../components/layout/auth-layout";
 import {useHistory} from "react-router";
 import {usePost} from "../../hooks/useApi";
-import {useAuth} from "../../providers/AuthProvider";
+import {useAuth} from "../../providers/auth-provider";
 
 
 export default function LoginPage() {
@@ -14,10 +14,9 @@ export default function LoginPage() {
     const {mutate, isPending} = usePost({
         name: 'login',
         endpoint: '/login',
-        withMessage: false,
         onSuccess: async (data: any) => {
             auth.login(data)
-            history.push("/beranda")
+            history.replace("/beranda")
         },
         onError: async (error: any) => {
             if (error?.response?.status === 500) {

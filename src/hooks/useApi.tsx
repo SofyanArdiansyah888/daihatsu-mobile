@@ -44,7 +44,6 @@ interface IPOST {
     endpoint: string;
     onSuccess?: (result: any) => void,
     onError?: (error: Error) => void,
-    withMessage?: boolean,
     successMessage?: string,
     errorMessage?: string
 }
@@ -55,24 +54,24 @@ export function usePost({
                             endpoint,
                             onError,
                             onSuccess,
-                            withMessage = true,
-                            successMessage = "Berhasil membuat data",
+                            successMessage,
                             errorMessage
                         }: IPOST) {
     const queryClient = useQueryClient()
+    const emptyArray = [null, "", undefined];
     return useMutation({
         onSuccess: async (data) => {
             await queryClient.invalidateQueries({
                 queryKey: [name]
             })
-            if (withMessage) {
-                message.success(successMessage)
-            }
             if (onSuccess) {
                 onSuccess(data)
                 return;
             }
-
+            if (!emptyArray.includes(successMessage))
+                message.success("Berhasil membuat data")
+            else
+                message.success(successMessage)
         },
         onError: async (error) => {
 
@@ -81,14 +80,17 @@ export function usePost({
                 return
             }
 
-            if (withMessage) {
-                // JIKA INPUT INVALID
-                // @ts-ignore
-                if(error?.status === 422) {
-                    message.error(error.message)
-                }
-                message.error(errorMessage)
+            // JIKA INPUT INVALID
+            // @ts-ignore
+            if (error?.status === 422) {
+                message.error(error.message);
+                return;
             }
+
+            if (!emptyArray.includes(errorMessage))
+                message.error("Gagal membuat data")
+            else
+                message.error(errorMessage)
         },
         mutationFn: (data) => {
             return create(endpoint, data)
@@ -99,39 +101,48 @@ export function usePost({
 export function usePut({
                            name,
                            endpoint,
-                           id,
                            onError,
                            onSuccess,
-                           withMessage = true,
-                           successMessage = "Berhasil mengupdate data",
+                           successMessage,
                            errorMessage
-                       }: IPOST & { id: string | number | undefined }) {
+                       }: IPOST) {
     const queryClient = useQueryClient()
+    const emptyArray = [null, "", undefined];
     return useMutation({
         onSuccess: async (data) => {
             await queryClient.invalidateQueries({
                 queryKey: [name]
             })
-            if (withMessage) {
-                message.success(successMessage)
-            }
             if (onSuccess) {
                 onSuccess(data)
                 return;
             }
-
+            if (!emptyArray.includes(successMessage))
+                message.success("Berhasil mengupdate data")
+            else
+                message.success(successMessage)
         },
         onError: async (error) => {
+
             if (onError) {
                 onError(error)
                 return
             }
-            if (withMessage) {
-                message.error(errorMessage ? errorMessage : error.message)
+
+            // JIKA INPUT INVALID
+            // @ts-ignore
+            if (error?.status === 422) {
+                message.error(error.message);
+                return;
             }
+
+            if (!emptyArray.includes(errorMessage))
+                message.error("Gagal mengupdate data")
+            else
+                message.error(errorMessage)
         },
         mutationFn: (data) => {
-            return update(id, endpoint, data)
+            return update(endpoint, data)
         },
     })
 }
@@ -146,8 +157,7 @@ export function useExport({
                               endpoint,
                               onError,
                               onSuccess,
-                              withMessage = true,
-                              successMessage = "Berhasil membuat data",
+                              successMessage = "Berhasil mengexport data",
                               errorMessage = "Gagal mengexport data",
                               filename
                           }: IExport) {
@@ -165,9 +175,8 @@ export function useExport({
             document.body.appendChild(link);
             link.click();
 
-            if (withMessage) {
-                message.success(successMessage)
-            }
+            message.success(successMessage)
+
             if (onSuccess) {
                 onSuccess(data)
                 return;
@@ -179,12 +188,11 @@ export function useExport({
                 onError(error)
                 return
             }
-            if (withMessage) {
-                message.error(errorMessage)
-            }
+            message.error(errorMessage)
+
         },
         mutationFn: (data) => {
-            return create(endpoint, data,'blob')
+            return create(endpoint, data, 'blob')
         },
     })
 }
@@ -196,32 +204,41 @@ export function useDelete({
                               onError,
                               errorMessage,
                               successMessage,
-                              withMessage
                           }: IPOST) {
     const queryClient = useQueryClient()
+    const emptyArray = [null, "", undefined];
     return useMutation({
         onSuccess: async (data) => {
             await queryClient.invalidateQueries({
                 queryKey: [name]
             })
-            if (withMessage) {
-                message.success(successMessage)
-            }
             if (onSuccess) {
                 onSuccess(data)
                 return;
             }
-            message.success("Berhasil menghapus data")
+            if (!emptyArray.includes(successMessage))
+                message.success("Berhasil menghapus data")
+            else
+                message.success(successMessage)
         },
         onError: async (error) => {
-            if (withMessage) {
-                message.error(errorMessage ? errorMessage : error.message)
-            }
+
             if (onError) {
                 onError(error)
                 return
             }
-            message.error("Gagal menghapus data")
+
+            // JIKA INPUT INVALID
+            // @ts-ignore
+            if (error?.status === 422) {
+                message.error(error.message);
+                return;
+            }
+
+            if (!emptyArray.includes(errorMessage))
+                message.error("Gagal menghapus data")
+            else
+                message.error(errorMessage)
         },
         mutationFn: (id: string) => {
             return destroy(id, endpoint)

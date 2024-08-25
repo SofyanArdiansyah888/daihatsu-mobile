@@ -1,43 +1,37 @@
-import {IonContent, IonPage, IonRefresher, IonRefresherContent} from "@ionic/react";
-import React from "react";
 import {Button, FloatButton} from "antd";
-import {AimOutlined, CameraOutlined, HeatMapOutlined} from "@ant-design/icons"
-import {useHistory, useLocation} from "react-router";
-import NavHeader from "../../components/nav-header";
+import {useHistory} from "react-router";
 import {useGetList} from "../../hooks/useApi";
-import {ResponseListType} from "../../lib/interface/response-type";
-import CheckpointEntity from "../../entities/checkpoint.entity";
-import useURLParams from "../../hooks/useURLParams";
+import {IonContent, IonPage, IonRefresher, IonRefresherContent} from "@ionic/react";
+import NavHeader from "../../components/nav-header";
+import React, {useState} from "react";
 import SkeletonLoading from "../../components/skeleton-loading";
-
+import CheckpointEntity from "../../entities/checkpoint.entity";
+import {AimOutlined, PlusCircleOutlined} from "@ant-design/icons";
+import {ResponseListType} from "../../lib/interface/response-type";
+import CheckpointModal from "./component/checkpoint-modal";
 
 export default function CheckpointPage() {
     const history = useHistory()
-    const {params, handleParamsChange} = useURLParams({})
-    const queryParams = new URLSearchParams(useLocation().search)
-    const {data, isLoading, refetch} = useGetList<ResponseListType<CheckpointEntity[]>>
+    const [modal, setModal] = useState(false);
+    const {data, isFetching, refetch} = useGetList<ResponseListType<CheckpointEntity[]>>
     ({
         name: 'checkpoint',
-        endpoint: "/checkpoint",
-        params: {
-            ...params,
-        }
+        endpoint: `/checkpoint`,
+        params: {}
     })
+    const [selectedData, setSelectedData] = useState<CheckpointEntity | undefined>()
 
     function handleBack() {
-        history.replace("/beranda")
+        history.replace(`/profil`)
     }
 
     function handleItemClick(item: CheckpointEntity) {
-        history.replace(`checkpoint/history?id_checkpoint=${item.id}&id_shift=${queryParams.get('id_shift')}`)
+        setSelectedData(item)
+        setModal(true)
     }
 
-    function handleMapClick() {
-
-    }
-
-    function handleCameraClick() {
-
+    function handleAddClick(){
+        setModal(true)
     }
 
     return <IonPage>
@@ -51,11 +45,11 @@ export default function CheckpointPage() {
             >
                 <IonRefresherContent></IonRefresherContent>
             </IonRefresher>
-            <main className={"px-4 py-2 "}>
-                <NavHeader handleClick={handleBack} title={"Checkpoint"}/>
+            <NavHeader handleClick={handleBack} title={"Checkpoint"}/>
+            <main className={"p-4"}>
                 {
-                    isLoading ? <SkeletonLoading/> :
-                        <section className={"divide-y-[1px] space-y-2 py-2"}>
+                    isFetching ? <SkeletonLoading/> :
+                        <section className={" space-y-2"}>
                             {
                                 data?.data?.map((item: CheckpointEntity) =>
                                     <div
@@ -78,24 +72,20 @@ export default function CheckpointPage() {
                             }
                         </section>
                 }
+                <FloatButton
+                    type={"primary"}
+                    icon={<PlusCircleOutlined/>}
+                    onClick={handleAddClick}
+                />
+
             </main>
         </IonContent>
-        <FloatButton.Group
-            trigger={"click"}
-            style={{insetInlineEnd: 24}}
-            icon={<HeatMapOutlined/>}
-            type={"primary"}
-        >
-            <FloatButton
-                type={"primary"}
-                icon={<CameraOutlined/>}
-                onClick={handleCameraClick}
-            />
-            <FloatButton
-                type={"primary"}
-                icon={<AimOutlined/>}
-                onClick={handleMapClick}
-            />
-        </FloatButton.Group>
+
+        <CheckpointModal
+            selectedData={selectedData}
+            setSelectedData={setSelectedData}
+            isOpen={modal}
+            setIsOpen={setModal}
+        />
     </IonPage>
 }

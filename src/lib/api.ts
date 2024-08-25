@@ -79,11 +79,11 @@ export function create<T,D>(endpoint: string, data: D,responseType: 'json' | 'bl
     });
 }
 
-export function update<T,D>(id:string|number|undefined,endpoint: string, data: D) {
+export function update<T,D>(endpoint: string, data: D) {
     return apiRequest<T, D>({
         // token: user?.token,
         method: "PUT",
-        endpoint: `${endpoint}/${id}`,
+        endpoint: `${endpoint}`,
         responseType: 'json',
         data
     });

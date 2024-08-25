@@ -1,9 +1,9 @@
 import {IonContent, IonPage} from "@ionic/react";
 import {Avatar, Button, Modal} from "antd";
-import {HomeOutlined, LockOutlined, LogoutOutlined, RightOutlined, UserOutlined,} from "@ant-design/icons";
+import {LockOutlined, LogoutOutlined, UserOutlined,GlobalOutlined} from "@ant-design/icons";
 import React from "react";
 import {useHistory} from "react-router";
-import {useAuth} from "../../providers/AuthProvider";
+import {useAuth} from "../../providers/auth-provider";
 
 const {confirm} = Modal;
 export default function ProfilPage() {
@@ -20,16 +20,17 @@ export default function ProfilPage() {
         })
     }
 
-    function handleBerandaClick() {
-        history.replace('/beranda')
+
+    function handleUpdatePasswordClick() {
+        history.replace("/update-password")
     }
 
-    function handleUpdatePasswordClick(){
-        history.replace("/profil/update-password")
+    function handleUpdateProfilClick() {
+        history.replace("/update-profil")
     }
 
-    function handleUpdateProfilClick(){
-        history.replace("/profil/update-profil")
+    function handleCheckpointClick() {
+        history.replace("/checkpoint")
     }
 
     return <IonPage>
@@ -44,7 +45,7 @@ export default function ProfilPage() {
                     </div>
                 </header>
 
-                <section className={"divide-y-[1px] space-y-2 py-2"}>
+                <section className={" space-y-2 py-2"}>
 
                     <Item
                         text={"Update Password"}
@@ -59,9 +60,9 @@ export default function ProfilPage() {
                     />
 
                     <Item
-                        text={"Beranda"}
-                        icon={<HomeOutlined/>}
-                        handleClick={handleBerandaClick}
+                        text={"Checkpoint"}
+                        icon={<GlobalOutlined/>}
+                        handleClick={handleCheckpointClick}
                     />
 
                     <Item
@@ -99,11 +100,11 @@ function Item({
 
         </div>
         <div>
-            <Button
-                icon={<RightOutlined/>}
-                type={"text"}
-                size={"middle"}
-            />
+            {/*<Button*/}
+            {/*    icon={<RightOutlined/>}*/}
+            {/*    type={"primary"}*/}
+            {/*    size={"middle"}*/}
+            {/*/>*/}
         </div>
     </div>
 }

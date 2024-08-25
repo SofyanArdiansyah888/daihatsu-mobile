@@ -1,7 +1,8 @@
 import {Form, Input} from "antd";
 import {RuleObject, RuleRender} from "rc-field-form/lib/interface";
 
-const { TextArea } = Input;
+const {TextArea} = Input;
+
 export interface IFormSelectValue {
     value: string,
     label: string,
@@ -14,19 +15,21 @@ interface IFormSelect {
     value?: string,
     onChange?: any,
     placeholder?: string,
-    rules?: RuleObject[] | RuleRender[]
+    rules?: RuleObject[] | RuleRender[],
+    disabled?: boolean
 }
 
 export default function FormTextarea({
-                                      name,
-                                      label,
-                                      onChange,
-                                      placeholder,
-                                      rules,
-                                      value
-                                  }: IFormSelect) {
+                                         name,
+                                         label,
+                                         onChange,
+                                         placeholder,
+                                         rules,
+                                         value,
+                                         disabled = false
+                                     }: IFormSelect) {
     return <Form.Item name={name} label={label} rules={rules} className={"capitalize"}>
-        <TextArea rows={4} onChange={onChange} placeholder={placeholder} value={value}/>
+        <TextArea rows={4} onChange={onChange} placeholder={placeholder} value={value} disabled={disabled}/>
     </Form.Item>
 
 }

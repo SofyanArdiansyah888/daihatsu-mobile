@@ -5,21 +5,17 @@ import {UserOutlined} from "@ant-design/icons"
 import RiwayatPatroli from "./components/riwayat-patroli";
 import PatroliAktif from "./components/patroli-aktif";
 import {useHistory} from "react-router";
-import {useAuth} from "../../providers/AuthProvider";
+import {useAuth} from "../../providers/auth-provider";
 import moment from "moment/moment";
 import {useGetList} from "../../hooks/useApi";
 import {ResponseListType} from "../../lib/interface/response-type";
-import CheckpointEntity from "../../entities/checkpoint.entity";
 import ShiftEntity from "../../entities/shift.entity";
 import JadwalSecurityEntity from "../../entities/jadwal-security";
 
 
 export default function BerandaPage() {
-    const history = useHistory()
     const {user} = useAuth()
-
-
-    const {data: activeShift, isLoading, refetch} = useGetList<ResponseListType<ShiftEntity>>
+    const {data: activeShift, refetch} = useGetList<ResponseListType<ShiftEntity>>
     ({
         name: 'shift-active',
         endpoint: "/active-shift",
@@ -28,18 +24,17 @@ export default function BerandaPage() {
         }
     })
 
-    const {data, isLoading:isLoadingRiwayat,refetch:refectRiwayat} = useGetList<ResponseListType<JadwalSecurityEntity[]>>
+    const {
+        data,
+        isLoading: isLoadingRiwayat,
+        refetch: refectRiwayat
+    } = useGetList<ResponseListType<JadwalSecurityEntity[]>>
     ({
         name: 'laporan-patroli',
         endpoint: "/laporan-patroli",
-        params: {
-            // ...params,
-        }
+        params: {}
     })
 
-    function handleLogout() {
-        history.replace('/profil')
-    }
 
     return <IonPage>
         <IonContent scrollY={true}>
@@ -68,11 +63,11 @@ export default function BerandaPage() {
                         </div>
                     </div>
                     <div>
-                        <Button
-                            icon={<UserOutlined/>}
-                            type={"text"}
-                            onClick={handleLogout}
-                        />
+                        {/*<Button*/}
+                        {/*    icon={<UserOutlined/>}*/}
+                        {/*    type={"text"}*/}
+                        {/*    onClick={handleLogout}*/}
+                        {/*/>*/}
                     </div>
                 </div>
 
@@ -80,10 +75,19 @@ export default function BerandaPage() {
                     activeShift={activeShift?.data}
                 />
 
-                <RiwayatPatroli
-                    data={data?.data}
-                    isLoading={isLoadingRiwayat}
-                />
+                <div className={"space-y-10 mt-12"}>
+                    <RiwayatPatroli
+                        title={"Shift Berjalan"}
+                        data={data?.data}
+                        isLoading={isLoadingRiwayat}
+                    />
+
+                    <RiwayatPatroli
+                        title={"Shift Warga"}
+                        data={data?.data}
+                        isLoading={isLoadingRiwayat}
+                    />
+                </div>
 
             </main>
 

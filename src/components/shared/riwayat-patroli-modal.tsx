@@ -1,8 +1,8 @@
 import {Descriptions, Form, Modal} from "antd";
 import React from "react";
-import CheckpointItem from "../../../components/item/checkpoint-item";
-import CheckpointHistoryEntity from "../../../entities/checkpoint-history";
-import JadwalSecurityEntity from "../../../entities/jadwal-security";
+import CheckpointItem from "../item/checkpoint-item";
+import CheckpointHistoryEntity from "../../entities/checkpoint-history";
+import JadwalSecurityEntity from "../../entities/jadwal-security";
 import moment from "moment/moment";
 
 interface GroupedData {
@@ -18,8 +18,6 @@ export default function RiwayatPatroliModal({
     setIsOpen: React.Dispatch<React.SetStateAction<boolean>>,
     selectedItem: any
 }) {
-    console.log({selectedItem})
-
     function groupByCheckpoint(): { group_checkpoint: string, items: CheckpointHistoryEntity[] }[] {
         const groupedData = selectedItem?.shift?.checkpoint_history?.reduce((result: GroupedData, item: any) => {
             const key = item?.checkpoint.checkpoint;
@@ -35,8 +33,6 @@ export default function RiwayatPatroliModal({
             items: groupedData![key]
         }));
     }
-
-    console.log("GROUPED", groupByCheckpoint())
     return <Modal
         title={"Detail Riwayat"}
         open={isOpen}
@@ -45,7 +41,7 @@ export default function RiwayatPatroliModal({
         footer={false}
         centered
     >
-        <section className={"py-6 space-y-8 divide-y-[1px] divide-red-500"}>
+        <section className={"py-6 space-y-8  divide-red-500"}>
             <div className={"grid grid-cols-2 gap-y-4"}>
                 <Item
                     title={"Shift"}
@@ -74,12 +70,13 @@ export default function RiwayatPatroliModal({
             {groupByCheckpoint()?.map((item, index) =>
                 <div className={"pt-6"}>
                     <h1 className={"font-semibold text-md"}>{item.group_checkpoint}</h1>
+                    <hr className={"border-[1px] rounded-full border-red-500 my-2"}/>
                     <div className={"space-y-4 mt-6"}>
                         {
                             item.items.map((detail) => <CheckpointItem
                                 title={detail?.user?.fullname}
                                 // subtitle={moment(detail?.created_at).format("HH:mm")}
-                                subtitle={["",null,undefined].includes(detail?.catatan) ? "Tidak ada catatan" : detail?.catatan}
+                                subtitle={["", null, undefined].includes(detail?.catatan) ? "Tidak ada catatan" : detail?.catatan}
                                 tanggal={moment(detail?.created_at).format("HH:mm")}
                                 gambar={`data:image/png;base64,${detail?.gambar}`}
                                 handleItemClick={() => {

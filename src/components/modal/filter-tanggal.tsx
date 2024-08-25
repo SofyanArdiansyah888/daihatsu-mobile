@@ -1,18 +1,28 @@
 import {Form} from "antd";
 import {useEffect, useState} from "react";
-import {IFormSelectValue} from "../../../components/form/form-select";
-import FilterModal from "../../../components/modal/filter-modal";
-import FormDate from "../../../components/form/form-date";
-import useBerandaStore from "../data/useBerandaStore";
+import FilterModal from "./filter-modal";
+import FormDate from "../form/form-date";
+import {IFilterSelect} from "../../lib/reducers/filter-reducer";
 
-export default function FiterTanggal() {
+
+export interface IFilterTanggal {
+    dari?: string;
+    sampai?: string;
+}
+
+export default function FilterTanggal({
+                                         changeFilterPayload,
+                                         filterPayload
+                                     }: {
+    changeFilterPayload: (payload: IFilterTanggal) => void;
+    filterPayload: {
+        [key: string]: Pick<IFilterSelect, "value" | "label">
+    }
+
+}) {
     const [form] = Form.useForm();
-    const {changeFilterPayload, filterPayload} = useBerandaStore();
     const [isOpen, setIsOpen] = useState(false)
 
-    function handleChange(name: string, value: Pick<IFormSelectValue, "value" | "label">) {
-        form.setFieldValue(name, value)
-    }
 
     function handleSubmit(value: any) {
         changeFilterPayload({...value})

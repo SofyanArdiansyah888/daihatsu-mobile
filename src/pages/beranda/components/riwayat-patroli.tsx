@@ -1,18 +1,16 @@
 import React, {useEffect, useState} from "react";
-import FiterTanggal from "./filter-tanggal";
-import useBerandaStore from "../data/useBerandaStore";
-import RiwayatPatroliModal from "./riwayat-patroli-modal";
+import RiwayatPatroliModal from "../../../components/shared/riwayat-patroli-modal";
 import JadwalSecurityEntity from "../../../entities/jadwal-security";
 import moment from "moment/moment";
 import SkeletonLoading from "../../../components/skeleton-loading";
+import EmptyData from "../../../components/empty-data";
 
-export default function RiwayatPatroli({isLoading, data}: {
+export default function RiwayatPatroli({isLoading, data, title}: {
     isLoading: boolean,
     data: JadwalSecurityEntity[] | undefined,
+    title: string
 
 }) {
-    const {filterPayload} = useBerandaStore()
-
     const [isOpen, setIsOpen] = useState(false);
     const [selectedItem, setSelectedItem] = useState<JadwalSecurityEntity>()
 
@@ -26,17 +24,18 @@ export default function RiwayatPatroli({isLoading, data}: {
             setSelectedItem(undefined)
         }
     }, [isOpen]);
-    return <section className={"space-y-2 mt-8"}>
+    return <section className={"space-y-2"}>
 
 
         <div className={"flex justify-between"}>
-            <h1 className={"font-bold text-md"}>Riwayat Patroli</h1>
-            <FiterTanggal/>
+            <h1 className={"font-semibold text-md capitalize"}>{title}</h1>
         </div>
+        <hr className={"border-[1px] rounded-full border-red-500"}/>
 
         {
-            isLoading ? <SkeletonLoading/> :
-                <div className={"divide-y-[1px]"}>
+            isLoading ? <SkeletonLoading length={1}/> :
+                <div className={""}>
+                    <EmptyData data={data} />
                     {
                         data?.map((item, index) =>
                             <div

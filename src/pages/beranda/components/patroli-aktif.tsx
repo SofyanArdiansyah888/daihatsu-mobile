@@ -2,9 +2,6 @@ import {Button} from "antd";
 import {SecurityScanOutlined} from "@ant-design/icons";
 import React from "react";
 import {useHistory} from "react-router";
-import {useGetList} from "../../../hooks/useApi";
-import {ResponseListType} from "../../../lib/interface/response-type";
-import CheckpointEntity from "../../../entities/checkpoint.entity";
 import ShiftEntity from "../../../entities/shift.entity";
 
 export default function PatroliAktif({activeShift}: { activeShift: ShiftEntity | undefined }) {
@@ -12,7 +9,7 @@ export default function PatroliAktif({activeShift}: { activeShift: ShiftEntity |
 
 
     function handlePatroliClick() {
-        if (activeShift) history.replace(`/patroli/checkpoint?id_shift=${activeShift.id}`)
+        if (activeShift) history.replace(`/checkpoint?id_shift=${activeShift.id}`)
     }
 
     return <div
