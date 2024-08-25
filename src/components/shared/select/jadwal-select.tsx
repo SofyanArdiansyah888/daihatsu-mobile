@@ -12,8 +12,7 @@ export default function JadwalSelect({
                                          tanggal,
                                          id_user,
                                          disabled = false
-                                     }: ISelect & { tanggal: string, id_user: string }) {
-    console.log("TANGGAL JADWAL:", tanggal)
+                                     }: ISelect & { tanggal: string, id_user: string |undefined }) {
     const {data, isFetching} = useGetList<ResponseListType<JadwalSecurityEntity[]>>
     ({
         name,
@@ -23,13 +22,15 @@ export default function JadwalSelect({
             id_user
         }
     })
+
     const options = data?.data?.map((item) => {
         return {
             label: item.shift.shift,
             value: item.id.toString()
         }
     })
-    return <FormSelect
+
+    return  <FormSelect
         mode={mode}
         name={name}
         label={label}

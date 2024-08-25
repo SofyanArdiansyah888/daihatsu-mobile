@@ -2,15 +2,13 @@ import CheckpointEntity from "../../../entities/checkpoint.entity";
 import {Dispatch, useEffect} from "react";
 import {Form, message} from "antd";
 import {usePost, usePut} from "../../../hooks/useApi";
-import {ApprovalFormModal} from "../../../components/modal/form-modal";
+import FormModal from "../../../components/modal/form-modal";
 import FormTextarea from "../../../components/form/form-textarea";
 import TukarShiftEntity from "../../../entities/tukar-shift.entity";
 import FormDate from "../../../components/form/form-date";
 import {useAuth} from "../../../providers/auth-provider";
 import SecuritySelect from "../../../components/shared/select/security-select";
 import JadwalSelect from "../../../components/shared/select/jadwal-select";
-import moment from "moment";
-import FormInput from "../../../components/form/form-input";
 
 interface IPropsModal {
     selectedData: TukarShiftEntity | undefined,
@@ -19,11 +17,13 @@ interface IPropsModal {
     setIsOpen: (value: boolean) => void
 }
 
-export default function ApprovalModal({isOpen, setIsOpen, selectedData, setSelectedData}: IPropsModal) {
+export default function JadwalModal({isOpen, setIsOpen, selectedData, setSelectedData}: IPropsModal) {
     const {user} = useAuth()
     const [form] = Form.useForm();
 
+
     const values = Form.useWatch([], form)
+
     const {mutate: create, isPending: createLoading} = usePost({
         name: 'tukar-shift',
         endpoint: '/tukar-shift',
@@ -35,42 +35,35 @@ export default function ApprovalModal({isOpen, setIsOpen, selectedData, setSelec
 
     const {mutate: update, isPending: updateLoading} = usePut({
         name: 'tukar-shift',
-        endpoint: `/tukar-shift/${selectedData?.id}/update-status`,
+        endpoint: `/tukar-shift/${selectedData?.id}`,
         onSuccess: async () => {
             message.success("Berhasil update request");
             setIsOpen(false)
         }
     })
 
-    function handleApprove(value: any) {
+    function handleSubmit(value: any) {
         if (selectedData) {
             update({
                 ...value,
-                status: 'approve'
+                status:false
             })
             return
         }
+        create({
+            ...value,
+            status:false
+        })
     }
 
-    function handleReject(value: any) {
-        if (selectedData) {
-            update({
-                ...value,
-                status: 'reject'
-            })
-            return
-        }
-    }
 
+    function isRequester() {
+        return selectedData?.id_user_requester === user?.id
+    }
 
     useEffect(() => {
         if (selectedData) {
-            const tanggal = selectedData?.jadwal_requested?.tanggal_mulai
-            form.setFieldsValue({
-                ...selectedData,
-                status: selectedData?.status?.toUpperCase(),
-                tanggal: moment(tanggal)
-            })
+            form.setFieldsValue({...selectedData})
         }
         if (!isOpen) {
             form.resetFields()
@@ -80,16 +73,12 @@ export default function ApprovalModal({isOpen, setIsOpen, selectedData, setSelec
     }, [isOpen])
 
 
-    return <ApprovalFormModal<CheckpointEntity>
+    return <FormModal<CheckpointEntity>
         form={form}
-        title={`Approval Tukar Shift`}
+        title={`Data Tukar Shift`}
         isOpen={isOpen}
         setIsOpen={(value) => setIsOpen(value as boolean)}
-        onApprove={handleApprove}
-        onReject={handleReject}
-        onSubmit={() => {
-        }}
-        status={selectedData?.status as string}
+        onSubmit={handleSubmit}
         confirmLoading={selectedData ? updateLoading : createLoading}
     >
 
@@ -99,9 +88,10 @@ export default function ApprovalModal({isOpen, setIsOpen, selectedData, setSelec
             <FormDate
                 name={"tanggal"}
                 label={"tanggal"}
-                disabled={true}
+                onChange={(value) => {
+                    // form.setFieldValue('','')
+                }}
             />
-            <FormInput name={"status"} label={"Status"} disabled={true}/>
 
             {/*id_user_requester*/}
             <SecuritySelect
@@ -116,8 +106,8 @@ export default function ApprovalModal({isOpen, setIsOpen, selectedData, setSelec
                 name={"id_request_jadwal_security"}
                 label={"Dari Shift"}
                 tanggal={values?.tanggal?.format("YYYY-MM-DD")}
-                id_user={user?.id?.toString()}
-                disabled={true}
+                id_user={"1"}
+
             />
 
             {/*id_user_approver*/}
@@ -125,7 +115,7 @@ export default function ApprovalModal({isOpen, setIsOpen, selectedData, setSelec
                 name={"id_user_approver"}
                 label={"Approver"}
                 excludeUser={user}
-                disabled={true}
+                // disabled={!isRequester()}
             />
 
             {/*id_approve_jadwal_security*/}
@@ -134,7 +124,7 @@ export default function ApprovalModal({isOpen, setIsOpen, selectedData, setSelec
                 label={"Ke Shift"}
                 tanggal={values?.tanggal?.format("YYYY-MM-DD")}
                 id_user={values?.id_user_approver?.toString()}
-                disabled={true}
+                // id_user={user?.id?.toString() as string}
             />
 
 
@@ -147,10 +137,9 @@ export default function ApprovalModal({isOpen, setIsOpen, selectedData, setSelec
                         required: true
                     }
                 ]}
-                disabled={true}
             />
         </div>
 
 
-    </ApprovalFormModal>
+    </FormModal>
 }

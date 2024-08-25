@@ -4,6 +4,6 @@ import {IFilterTanggal} from "../../../components/modal/filter-tanggal";
 
 
 const useJadwalStore = create<IFilterReducer<IFilterTanggal>>((set) => ({
-    ...filterReducer(set)
+    ...filterReducer(set),
 }))
 export default useJadwalStore

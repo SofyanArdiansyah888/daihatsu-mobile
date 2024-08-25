@@ -10,5 +10,5 @@ export default interface TukarShiftEntity {
     jadwal_approved: JadwalSecurityEntity,
     jadwal_requested: JadwalSecurityEntity,
     catatan: string,
-    status: boolean
+    status: string
 }

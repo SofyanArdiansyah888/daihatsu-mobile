@@ -1,29 +1,37 @@
 import {IonContent, IonPage, IonRefresher, IonRefresherContent} from "@ionic/react";
-import React from "react";
+import React, {useState} from "react";
 import {useHistory, useLocation} from "react-router";
 import NavHeader from "../../components/nav-header";
 import {useGetList} from "../../hooks/useApi";
 import {ResponseListType} from "../../lib/interface/response-type";
-import CheckpointEntity from "../../entities/checkpoint.entity";
 import useURLParams from "../../hooks/useURLParams";
 import SkeletonLoading from "../../components/skeleton-loading";
-import {FilterButton} from "../../components/button";
 import FilterTanggal from "../../components/modal/filter-tanggal";
 import useJadwalStore from "./data/useJadwalStore";
 import {PlusCircleOutlined} from "@ant-design/icons";
 import {FloatButton} from "antd";
 import EmptyData from "../../components/empty-data";
+import JadwalModal from "./component/jadwal-modal";
+import TukarShiftEntity from "../../entities/tukar-shift.entity";
+import moment from "moment";
+import {useAuth} from "../../providers/auth-provider";
+import ApprovalModal from "./component/approval-modal";
 
 
 export default function JadwalPage() {
     const history = useHistory()
-    const {filterPayload,changeFilterPayload} = useJadwalStore()
+    const [selectedItem, setSelectedItem] = useState<TukarShiftEntity>()
+    const [modal, setModal] = useState<boolean>(false)
+    const [approvalModal, setApprovalModal] = useState<boolean>(false)
+    const {filterPayload, changeFilterPayload} = useJadwalStore()
     const {params, handleParamsChange} = useURLParams({})
+    const {user} = useAuth()
     const queryParams = new URLSearchParams(useLocation().search)
-    const {data, isLoading, refetch} = useGetList<ResponseListType<CheckpointEntity[]>>
+
+    const {data, isLoading, refetch} = useGetList<ResponseListType<TukarShiftEntity[]>>
     ({
-        name: 'checkpoint',
-        endpoint: "/checkpoint",
+        name: 'tukar-shift',
+        endpoint: "/tukar-shift",
         params: {
             ...params,
         }
@@ -33,12 +41,17 @@ export default function JadwalPage() {
         history.replace("/beranda")
     }
 
-    function handleItemClick(item: CheckpointEntity) {
-        history.replace(`checkpoint-history?id_checkpoint=${item.id}&id_shift=${queryParams.get('id_shift')}`)
+    function handleItemClick(item: TukarShiftEntity) {
+        setSelectedItem(item)
+        if (user?.id?.toString() === item?.id_user_requester?.toString()) {
+            setModal(true)
+            return;
+        }
+        setApprovalModal(true)
     }
 
-    function handleAddClick(){
-
+    function handleAddClick() {
+        setModal(true)
     }
 
 
@@ -72,14 +85,17 @@ export default function JadwalPage() {
                                 fullscreen={true}
                             />
                             {
-                                data?.data?.map((item: CheckpointEntity) =>
+                                data?.data?.map((item: TukarShiftEntity) =>
                                     <div
                                         className={"flex justify-between items-center"}
                                         onClick={() => handleItemClick(item)}
                                     >
                                         <div className={" py-2  rounded-md"}>
-                                            <h1 className={"text-sm font-semibold"}>{item?.checkpoint}</h1>
-                                            <p className={"font-light text-xs"}>{item?.deskripsi}</p>
+                                            <h1 className={"text-sm font-semibold"}>{item?.jadwal_approved?.shift?.shift}  </h1>
+                                            <p className={"font-light text-xs"}>{item?.status ? "Disetujui" : "Belum Disetujui"}</p>
+                                        </div>
+                                        <div className={"text-xs font-semibold items-end"}>
+                                            {moment(item?.jadwal_approved?.tanggal).format("D MMMM Y")}
                                         </div>
 
                                     </div>
@@ -96,5 +112,17 @@ export default function JadwalPage() {
             />
         </IonContent>
 
+        <JadwalModal
+            selectedData={selectedItem}
+            setSelectedData={setSelectedItem}
+            isOpen={modal}
+            setIsOpen={setModal}
+        />
+        <ApprovalModal
+            selectedData={selectedItem}
+            setSelectedData={setSelectedItem}
+            isOpen={approvalModal}
+            setIsOpen={setApprovalModal}
+        />
     </IonPage>
 }

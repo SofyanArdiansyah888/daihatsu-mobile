@@ -40,7 +40,6 @@ export default function FormModal<T>({
     }, [form]);
 
     async function handleOKModal() {
-        alert("HELLOW")
         try {
             const values = await formInstance?.validateFields();
             onSubmit(values)
@@ -87,21 +86,22 @@ export function ApprovalFormModal<T>({
                                          onReject,
                                          scrollArea = false,
                                          sectionClass,
-                                         modalClass
+                                         modalClass,
+                                         status
                                      }: IFormModal<T> & {
     onApprove: (values: any) => void,
     onReject: (values: any) => void,
+    status: string
 }) {
     const [formInstance, setFormInstance] = useState<FormInstance>();
     useEffect(() => {
         setFormInstance(form);
     }, [form]);
 
-    async function handleOKModal() {
+    async function handleOKModal(type: "approve" | "reject") {
         try {
             const values = await formInstance?.validateFields();
-            if (onApprove) onApprove(values)
-            if (onReject) onReject(values)
+            type === "approve" ? onApprove(values) : onReject(values)
         } catch (error) {
             console.log('Failed:', error);
         }
@@ -115,24 +115,26 @@ export function ApprovalFormModal<T>({
         destroyOnClose
         className={`${cn("!w-[350px]", modalClass)}`}
         centered
-        footer={<div className={"flex gap-1 justify-end"}>
-            <Button
-                onClick={handleOKModal}
-                style={{
-                    backgroundColor: "#dc2626",
-                    color: "white",
-                    fontWeight: 400
-                }}
-            >Reject</Button>
-            <Button
-                onClick={handleOKModal}
-                style={{
-                    backgroundColor: "#16a34a",
-                    color: "white",
-                    fontWeight: 400
-                }}
-            >Approve</Button>
-        </div>}
+        footer={
+        status === "request" &&
+            <div className={"flex gap-1 justify-end"}>
+                <Button
+                    onClick={() => handleOKModal('reject')}
+                    style={{
+                        backgroundColor: "#dc2626",
+                        color: "white",
+                        fontWeight: 400
+                    }}
+                >Reject</Button>
+                <Button
+                    onClick={() => handleOKModal('approve')}
+                    style={{
+                        backgroundColor: "#16a34a",
+                        color: "white",
+                        fontWeight: 400
+                    }}
+                >Approve</Button>
+            </div>}
     >
         {
             scrollArea ?

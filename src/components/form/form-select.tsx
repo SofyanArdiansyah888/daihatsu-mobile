@@ -41,7 +41,14 @@ export default function FormSelect({
                                        size = "middle",
                                        loading = false
                                    }: IFormSelect) {
-    return <Form.Item name={name} layout={layout} label={label} rules={rules} className={"!capitalize"}>
+    return <Form.Item
+        name={name}
+        layout={layout}
+        label={label}
+        rules={rules}
+        className={"!capitalize"}
+
+    >
         <Select
             showSearch
             value={value}
