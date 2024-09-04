@@ -1,4 +1,4 @@
-import {LockOutlined, SlackOutlined} from "@ant-design/icons"
+import {LockOutlined} from "@ant-design/icons"
 import FormInput from "../../components/form/form-input";
 import {Button, Form, message} from "antd";
 import AuthLayout from "../../components/layout/auth-layout";
@@ -34,7 +34,11 @@ export default function LoginPage() {
 
     return <AuthLayout
         headerText={"Login"}
-        headerIcon={<SlackOutlined className={"text-red-500 text-[96px]"}/>}
+        headerIcon={
+            <div className={"size-28 my-12 mx-auto"}>
+                <img src={"logo.png"} alt={"Logo"} className={"text-red-500 text-[96px]"}/>
+            </div>
+        }
     >
         <Form
             form={form}
