@@ -108,7 +108,7 @@ export default function JadwalPage() {
                 type={"primary"}
                 icon={<PlusCircleOutlined/>}
                 onClick={handleAddClick}
-                className={"mb-12"}
+                className={""}
             />
         </IonContent>
 
