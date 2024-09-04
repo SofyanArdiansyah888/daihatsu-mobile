@@ -9,7 +9,7 @@ export default function PatroliAktif({activeShift}: { activeShift: ShiftEntity |
 
 
     function handlePatroliClick() {
-        if (activeShift) history.replace(`/checkpoint?id_shift=${activeShift.id}`)
+        if (activeShift) history.replace(`/checkpoint-patroli?id_shift=${activeShift.id}`)
     }
 
     return <div
