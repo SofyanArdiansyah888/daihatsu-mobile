@@ -1,10 +1,8 @@
 import {IonContent, IonPage, IonRefresher, IonRefresherContent} from "@ionic/react";
 import React from "react";
-import {Avatar, Button} from "antd";
-import {UserOutlined} from "@ant-design/icons"
+import {Avatar} from "antd";
 import RiwayatPatroli from "./components/riwayat-patroli";
 import PatroliAktif from "./components/patroli-aktif";
-import {useHistory} from "react-router";
 import {useAuth} from "../../providers/auth-provider";
 import moment from "moment/moment";
 import {useGetList} from "../../hooks/useApi";
@@ -74,6 +72,7 @@ export default function BerandaPage() {
                 <PatroliAktif
                     activeShift={activeShift?.data}
                 />
+
 
                 <div className={"space-y-10 mt-12"}>
                     <RiwayatPatroli
