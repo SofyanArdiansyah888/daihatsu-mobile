@@ -90,7 +90,7 @@ export default function RiwayatPatroliPage() {
                                             {
                                                 item.items.map((detail) =>
                                                     <CheckpointItem
-                                                        gambar={`data:image/png;base64,${detail?.gambar}`}
+                                                        gambar={`${detail?.gambar}`}
                                                         title={moment(detail.created_at).format("HH:mm:ss")}
                                                         subtitle={detail.catatan}
                                                         handleItemClick={handleItemClick}
