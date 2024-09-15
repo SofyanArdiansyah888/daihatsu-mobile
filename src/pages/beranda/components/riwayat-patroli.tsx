@@ -37,15 +37,17 @@ export default function RiwayatPatroli({isLoading, data, title}: {
                 <div className={""}>
                     <EmptyData data={data} />
                     {
-                        data?.map((item, index) =>
+                        data
+                            // ?.filter((item) => item?.posisi === 'ketua' )
+                            ?.map((item, index) =>
                             <div
                                 key={index}
                                 className={" py-2  rounded-md"}
                                 onClick={() => handleClickItem(item)}>
-                                <h1 className={"text-sm font-semibold"}>{item.shift.shift}</h1>
+                                <h1 className={"text-sm font-semibold"}>{item?.shift?.shift}</h1>
                                 <div className={"flex justify-between"}>
-                                    <p className={"font-light text-xs"}>{item.user.fullname}</p>
-                                    <p className={"font-light text-xs"}>{moment(item.tanggal).format("DD MMMM YYYY")}</p>
+                                    <p className={"font-light text-xs"}>{item?.user?.fullname}</p>
+                                    <p className={"font-light text-xs"}>{moment(item?.tanggal).format("DD MMMM YYYY")}</p>
                                 </div>
                             </div>
                         )

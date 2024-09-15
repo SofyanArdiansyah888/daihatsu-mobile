@@ -1,5 +1,6 @@
 import exp from "node:constants";
 import CheckpointEntity from "./checkpoint.entity";
+import JadwalSecurityEntity from "./jadwal-security";
 
 export default interface ShiftEntity{
     id: string
@@ -7,6 +8,7 @@ export default interface ShiftEntity{
     dari: string;
     sampai: string;
     checkpoint_history?: CheckpointHistory[]
+    jadwal_security_active?: JadwalSecurityEntity[]
     created_at?: string;
     updated_at?: string;
 

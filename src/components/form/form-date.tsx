@@ -14,7 +14,8 @@ interface IFormSelect {
     rules?: RuleObject[] | RuleRender[],
     disabled?: boolean,
     size?: SizeType,
-    layout?: FormItemLayout
+    layout?: FormItemLayout,
+    defaultValue?: string
 }
 
 export default function FormDate({
@@ -27,7 +28,8 @@ export default function FormDate({
                                      showTime = false,
                                      disabled = false,
                                      size = "middle",
-                                     layout = "vertical"
+                                     layout = "vertical",
+                                     defaultValue
                                  }: IFormSelect) {
     function getFormat() {
         let format: string[];
@@ -55,6 +57,8 @@ export default function FormDate({
             placeholder={""}
             disabled={disabled}
             size={size}
-            className={"!w-full"}/>
+            defaultValue={defaultValue}
+            className={"!w-full"}
+        />
     </Form.Item>
 }

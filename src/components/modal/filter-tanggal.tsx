@@ -4,6 +4,7 @@ import FilterModal from "./filter-modal";
 import FormDate from "../form/form-date";
 import {IFilterSelect} from "../../lib/reducers/filter-reducer";
 
+import dayjs from 'dayjs';
 
 export interface IFilterTanggal {
     dari?: string;
@@ -30,9 +31,10 @@ export default function FilterTanggal({
     }
 
     useEffect(() => {
+
         form.setFieldsValue({
-            dari: filterPayload.dari,
-            sampai: filterPayload.sampai,
+            dari: dayjs(filterPayload?.dari?.toString()),
+            sampai: dayjs(filterPayload.sampai?.toString()),
         })
     }, [filterPayload, form, isOpen]);
 

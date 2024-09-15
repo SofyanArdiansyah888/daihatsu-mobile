@@ -1,3 +1,6 @@
+import moment from "moment";
+import dayjs from "dayjs";
+
 export interface IFilterSelect {
     value: string,
     label: string,
@@ -15,7 +18,10 @@ export interface IFilterReducer<T> {
 
 export default function filterReducer(set: any,filterPayload?: any) {
     return {
-        filterPayload: {},
+        filterPayload: {
+            dari: dayjs().format('YYYY-MM-DD'),
+            sampai: dayjs().format('YYYY-MM-DD'),
+        },
         ...filterPayload,
         changeFilterPayload: (payload: any) => {
             set(() => ({

@@ -49,19 +49,19 @@ export default function RiwayatPatroliModal({
                 />
                 <Item
                     title={"Ketua"}
-                    description={selectedItem?.user.fullname}
+                    description={selectedItem?.user?.fullname}
                 />
                 <Item
                     title={"Dari"}
-                    description={selectedItem?.shift.dari}
+                    description={selectedItem?.shift?.dari}
                 />
                 <Item
                     title={"Sampai"}
-                    description={selectedItem?.shift.sampai}
+                    description={selectedItem?.shift?.sampai}
                 />
                 <Item
                     title={"Tanggal"}
-                    description={selectedItem?.tanggal}
+                    description={moment(selectedItem?.tanggal_mulai).format("DD MMMM YYYY")}
                 />
 
 

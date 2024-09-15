@@ -27,6 +27,7 @@ export default function PatroliSecurityPage() {
         params: {
             dari: filterPayload.dari,
             sampai: filterPayload.sampai,
+            jenis: 'security'
         }
     })
 
@@ -37,6 +38,14 @@ export default function PatroliSecurityPage() {
 
 
     return <IonPage>
+        <NavHeader
+            title={"Patroli Security"}
+            withBackButton={false}
+            icon={<FilterTanggal
+                filterPayload={filterPayload}
+                changeFilterPayload={changeFilterPayload}
+            />}
+        />
         <IonContent scrollY={true}>
             <IonRefresher
                 slot="fixed"
@@ -48,14 +57,7 @@ export default function PatroliSecurityPage() {
                 <IonRefresherContent></IonRefresherContent>
             </IonRefresher>
 
-            <NavHeader
-                title={"Patroli Security"}
-                withBackButton={false}
-                icon={<FilterTanggal
-                    filterPayload={filterPayload}
-                    changeFilterPayload={changeFilterPayload}
-                />}
-            />
+
             <main className={"p-4"}>
                 {
                     isLoading ? <SkeletonLoading/> :

@@ -3,12 +3,14 @@ import {useHistory} from "react-router";
 import {useGetList} from "../../hooks/useApi";
 import {IonContent, IonPage, IonRefresher, IonRefresherContent} from "@ionic/react";
 import NavHeader from "../../components/nav-header";
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import SkeletonLoading from "../../components/skeleton-loading";
 import CheckpointEntity from "../../entities/checkpoint.entity";
 import {AimOutlined, PlusCircleOutlined} from "@ant-design/icons";
 import {ResponseListType} from "../../lib/interface/response-type";
 import CheckpointModal from "./component/checkpoint-modal";
+import {Geolocation} from "@capacitor/geolocation";
+import {distanceInMeters} from "../../lib/calculate-distance";
 
 export default function CheckpointPage() {
     const history = useHistory()
@@ -20,6 +22,7 @@ export default function CheckpointPage() {
         params: {}
     })
     const [selectedData, setSelectedData] = useState<CheckpointEntity | undefined>()
+
 
     function handleBack() {
         history.replace(`/profil`)

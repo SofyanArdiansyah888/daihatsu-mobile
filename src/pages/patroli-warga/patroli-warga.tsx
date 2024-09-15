@@ -10,6 +10,7 @@ import JadwalSecurityEntity from "../../entities/jadwal-security";
 import moment from "moment";
 import RiwayatPatroliModal from "../../components/shared/riwayat-patroli-modal";
 import EmptyData from "../../components/empty-data";
+import dayjs from "dayjs";
 
 
 export default function PatroliWargaPage() {
@@ -25,8 +26,9 @@ export default function PatroliWargaPage() {
         name: 'laporan-patroli',
         endpoint: "/laporan-patroli",
         params: {
-            dari: filterPayload.dari,
-            sampai: filterPayload.sampai,
+            dari: dayjs(filterPayload?.dari?.toString()).format("YYYY-MM-DD"),
+            sampai: dayjs(filterPayload?.sampai.toString()).format("YYYY-MM-DD"),
+            jenis: 'warga'
         }
     })
 
@@ -38,6 +40,14 @@ export default function PatroliWargaPage() {
 
 
     return <IonPage>
+        <NavHeader
+            title={"Patroli Warga"}
+            withBackButton={false}
+            icon={<FilterTanggal
+                filterPayload={filterPayload}
+                changeFilterPayload={changeFilterPayload}
+            />}
+        />
         <IonContent scrollY={true}>
             <IonRefresher
                 slot="fixed"
@@ -49,14 +59,7 @@ export default function PatroliWargaPage() {
                 <IonRefresherContent></IonRefresherContent>
             </IonRefresher>
 
-            <NavHeader
-                title={"Patroli Warga"}
-                withBackButton={false}
-                icon={<FilterTanggal
-                    filterPayload={filterPayload}
-                    changeFilterPayload={changeFilterPayload}
-                />}
-            />
+
             <main className={"p-4"}>
                 {
                     isLoading ? <SkeletonLoading/> :

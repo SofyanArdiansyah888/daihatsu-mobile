@@ -6,6 +6,7 @@ import FormModal from "../../../components/modal/form-modal";
 import FormInput from "../../../components/form/form-input";
 import FormSelect from "../../../components/form/form-select";
 import FormTextarea from "../../../components/form/form-textarea";
+import {Geolocation} from "@capacitor/geolocation";
 
 interface IPropsModal {
     selectedData: CheckpointEntity | undefined,
@@ -34,6 +35,26 @@ export default function CheckpointModal({isOpen, setIsOpen, selectedData, setSel
             setIsOpen(false)
         }
     })
+
+
+    useEffect(() => {
+        (async ()=> {
+            await Geolocation.requestPermissions()
+            await Geolocation.watchPosition(
+                {
+                    enableHighAccuracy: true,
+                },
+                (data) => {
+                    if (data) {
+                        const {latitude, longitude} = data.coords;
+                        form.setFieldValue('latitude',latitude)
+                        form.setFieldValue('longitude',longitude)
+                    }
+                }
+            );
+        })()
+
+    }, []);
 
     function handleSubmit(value: any) {
         if (selectedData) {

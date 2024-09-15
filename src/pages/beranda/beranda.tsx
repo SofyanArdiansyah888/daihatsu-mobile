@@ -19,6 +19,7 @@ export default function BerandaPage() {
         endpoint: "/active-shift",
         params: {
             // ...params,
+            jenis: 'internal'
         }
     })
 
@@ -28,9 +29,24 @@ export default function BerandaPage() {
         refetch: refectRiwayat
     } = useGetList<ResponseListType<JadwalSecurityEntity[]>>
     ({
-        name: 'laporan-patroli',
-        endpoint: "/laporan-patroli",
-        params: {}
+        name: 'laporan-patroli-security-berjalan',
+        endpoint: "/laporan-patroli/berjalan",
+        params: {
+            jenis: 'security'
+        }
+    })
+
+    const {
+        data:dataRiwayatWarga,
+        isLoading: isLoadingRiwayatWarga,
+        refetch: refectRiwayatWarga
+    } = useGetList<ResponseListType<JadwalSecurityEntity[]>>
+    ({
+        name: 'laporan-patroli-warga-berjalan',
+        endpoint: "/laporan-patroli/berjalan",
+        params: {
+            jenis: 'warga'
+        }
     })
 
 
@@ -41,6 +57,7 @@ export default function BerandaPage() {
                 onIonRefresh={async (e) => {
                     await refetch();
                     await refectRiwayat();
+                    await refectRiwayatWarga();
                     e.detail.complete();
                 }}
             >
@@ -83,8 +100,8 @@ export default function BerandaPage() {
 
                     <RiwayatPatroli
                         title={"Shift Warga"}
-                        data={data?.data}
-                        isLoading={isLoadingRiwayat}
+                        data={dataRiwayatWarga?.data}
+                        isLoading={isLoadingRiwayatWarga}
                     />
                 </div>
 
