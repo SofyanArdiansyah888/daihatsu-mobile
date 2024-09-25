@@ -34,6 +34,7 @@ export default function JadwalPage() {
         endpoint: "/tukar-shift",
         params: {
             ...params,
+            id_user: user?.id
         }
     })
 
@@ -92,7 +93,7 @@ export default function JadwalPage() {
                                     >
                                         <div className={" py-2  rounded-md"}>
                                             <h1 className={"text-sm font-semibold"}>{item?.jadwal_approved?.shift?.shift}  </h1>
-                                            <p className={"font-light text-xs"}>{item?.status ? "Disetujui" : "Belum Disetujui"}</p>
+                                            <p className={"font-light text-xs capitalize"}>{item?.status}</p>
                                         </div>
                                         <div className={"text-xs font-semibold items-end"}>
                                             {moment(item?.jadwal_approved?.tanggal).format("D MMMM Y")}

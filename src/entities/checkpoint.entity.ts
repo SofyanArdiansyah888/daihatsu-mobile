@@ -8,6 +8,7 @@ export default interface CheckpointEntity {
     latitude?: number;
     longitude?: number;
     radius: number;
+    jenis: string;
     created_at?: string;
     updated_at?: string;
     checkpoint_history?: CheckpointHistoryEntity

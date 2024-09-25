@@ -68,7 +68,11 @@ export default function ApprovalModal({isOpen, setIsOpen, selectedData, setSelec
             const tanggal = selectedData?.jadwal_requested?.tanggal_mulai
             form.setFieldsValue({
                 ...selectedData,
-                status: selectedData?.status?.toUpperCase(),
+                id_request_jadwal_security: selectedData?.id_request_jadwal_security?.toString(),
+                id_approve_jadwal_security: selectedData?.id_approve_jadwal_security?.toString(),
+                id_user_approver: selectedData?.id_user_approver?.toString(),
+                id_user_requester: selectedData?.id_user_requester?.toString(),
+                status:  selectedData?.status?.toUpperCase()?.toString(),
                 tanggal: moment(tanggal)
             })
         }
@@ -101,7 +105,9 @@ export default function ApprovalModal({isOpen, setIsOpen, selectedData, setSelec
                 label={"tanggal"}
                 disabled={true}
             />
-            <FormInput name={"status"} label={"Status"} disabled={true}/>
+            <FormInput
+                name={"status"} label={"Status"} disabled={true}
+            />
 
             {/*id_user_requester*/}
             <SecuritySelect

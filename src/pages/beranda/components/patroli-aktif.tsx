@@ -1,15 +1,24 @@
-import {Button} from "antd";
+import {Button, message} from "antd";
 import {SecurityScanOutlined} from "@ant-design/icons";
 import React from "react";
 import {useHistory} from "react-router";
 import ShiftEntity from "../../../entities/shift.entity";
+import {useAuth} from "../../../providers/auth-provider";
 
 export default function PatroliAktif({activeShift}: { activeShift: ShiftEntity | undefined }) {
     const history = useHistory()
-
+    const {user} = useAuth()
 
     function handlePatroliClick() {
-        if (activeShift) history.replace(`/checkpoint-patroli?id_shift=${activeShift.id}`)
+        if (activeShift) {
+            const schedules = activeShift?.jadwal_security_active;
+            const isUserExist = schedules?.some((item) => item.id_user == user?.id?.toString())
+            if (isUserExist) {
+                history.push(`/checkpoint-patroli?id_shift=${activeShift.id}`)
+            } else {
+                message.warning("Anda tidak berada di shift ini")
+            }
+        }
     }
 
     return <div

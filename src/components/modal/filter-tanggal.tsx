@@ -26,7 +26,11 @@ export default function FilterTanggal({
 
 
     function handleSubmit(value: any) {
-        changeFilterPayload({...value})
+        changeFilterPayload({
+            ...value,
+            dari: dayjs(value?.dari).format("YYYY-MM-DD"),
+            sampai: dayjs(value?.sampai).format("YYYY-MM-DD"),
+        })
         setIsOpen(false)
     }
 

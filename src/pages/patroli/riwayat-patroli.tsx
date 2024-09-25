@@ -14,6 +14,7 @@ import {ResponseListType} from "../../lib/interface/response-type";
 import CheckpointHistoryEntity from "../../entities/checkpoint-history";
 import SkeletonLoading from "../../components/skeleton-loading";
 import moment from "moment/moment";
+import EmptyData from "../../components/empty-data";
 
 
 export default function RiwayatPatroliPage() {
@@ -29,15 +30,15 @@ export default function RiwayatPatroliPage() {
         endpoint: `/checkpoint-history`,
         params: {
             ...params,
-            id_shift: queryParams.get("id_shift"),
-            id_checkpoint: queryParams.get("id_checkpoint"),
+            id_shift: queryParams?.get("id_shift"),
+            id_checkpoint: queryParams?.get("id_checkpoint"),
         }
     })
     const [selectedData, setSelectedData] = useState<ShiftEntity | undefined>()
 
 
     function handleBack() {
-        history.replace(`/checkpoint-patroli?id_shift=${queryParams.get("id_shift")}`)
+        history.replace(`/checkpoint-patroli?id_shift=${queryParams?.get("id_shift")}`)
     }
 
     function handleItemClick() {
@@ -75,12 +76,13 @@ export default function RiwayatPatroliPage() {
             >
                 <IonRefresherContent></IonRefresherContent>
             </IonRefresher>
-            <NavHeader handleClick={handleBack} title={"Detail Checkpoint"}/>
+            <NavHeader handleClick={handleBack} title={queryParams?.get("checkpoint") as string}/>
             <main className={"px-4"}>
 
                 {
                     isLoading ? <SkeletonLoading/> :
                         <section>
+                            <EmptyData data={groupByHour()} fullscreen={true}/>
                             {
                                 groupByHour()?.map((item) =>
                                     <div className={"divide-y-[1px] space-y-2 py-2"}>

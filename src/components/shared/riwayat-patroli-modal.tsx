@@ -19,8 +19,8 @@ export default function RiwayatPatroliModal({
     selectedItem: any
 }) {
     function groupByCheckpoint(): { group_checkpoint: string, items: CheckpointHistoryEntity[] }[] {
-        const groupedData = selectedItem?.shift?.checkpoint_history?.reduce((result: GroupedData, item: any) => {
-            const key = item?.checkpoint.checkpoint;
+        const groupedData = selectedItem?.checkpoint_history?.reduce((result: GroupedData, item: any) => {
+            const key = item?.checkpoint?.checkpoint;
             if (!result[key]) {
                 result[key] = [];
             }
@@ -78,7 +78,7 @@ export default function RiwayatPatroliModal({
                                 // subtitle={moment(detail?.created_at).format("HH:mm")}
                                 subtitle={["", null, undefined].includes(detail?.catatan) ? "Tidak ada catatan" : detail?.catatan}
                                 tanggal={moment(detail?.created_at).format("HH:mm")}
-                                gambar={`data:image/png;base64,${detail?.gambar}`}
+                                gambar={`${detail?.gambar}`}
                                 handleItemClick={() => {
                                 }}/>)
                         }

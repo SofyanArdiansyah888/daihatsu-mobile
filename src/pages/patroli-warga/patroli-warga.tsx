@@ -77,7 +77,7 @@ export default function PatroliWargaPage() {
                                         <h1 className={"text-sm font-semibold"}>{item.shift.shift}</h1>
                                         <div className={"flex justify-between"}>
                                             <p className={"font-light text-xs"}>{item.user.fullname}</p>
-                                            <p className={"font-light text-xs"}>{moment(item.tanggal).format("DD MMMM YYYY")}</p>
+                                            <p className={"font-light text-xs"}>{moment(item.tanggal_mulai).format("DD MMMM YYYY")}</p>
                                         </div>
                                     </div>
                                 )

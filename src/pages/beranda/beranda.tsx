@@ -19,7 +19,8 @@ export default function BerandaPage() {
         endpoint: "/active-shift",
         params: {
             // ...params,
-            jenis: 'internal'
+            jenis: user?.role === 'security' ? 'internal' : 'external',
+            id_user: user?.id
         }
     })
 
@@ -92,11 +93,14 @@ export default function BerandaPage() {
 
 
                 <div className={"space-y-10 mt-12"}>
-                    <RiwayatPatroli
-                        title={"Shift Berjalan"}
-                        data={data?.data}
-                        isLoading={isLoadingRiwayat}
-                    />
+                    {
+                        user?.role !== 'warga' && <RiwayatPatroli
+                            title={"Shift Berjalan"}
+                            data={data?.data}
+                            isLoading={isLoadingRiwayat}
+                        />
+                    }
+
 
                     <RiwayatPatroli
                         title={"Shift Warga"}

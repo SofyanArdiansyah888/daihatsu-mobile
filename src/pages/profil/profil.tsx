@@ -59,11 +59,11 @@ export default function ProfilPage() {
                         handleClick={handleUpdateProfilClick}
                     />
 
-                    <Item
-                        text={"Checkpoint"}
-                        icon={<GlobalOutlined/>}
-                        handleClick={handleCheckpointClick}
-                    />
+                    {/*<Item*/}
+                    {/*    text={"Checkpoint"}*/}
+                    {/*    icon={<GlobalOutlined/>}*/}
+                    {/*    handleClick={handleCheckpointClick}*/}
+                    {/*/>*/}
 
                     <Item
                         text={"Keluar"}

@@ -12,12 +12,13 @@ import ProfilPage from "../pages/profil/profil";
 import UpdatePasswordPage from "../pages/profil/update-password";
 import UpdateProfilPage from "../pages/profil/update-profil";
 import RiwayatPatroliPage from "../pages/patroli/riwayat-patroli";
-import {HomeOutlined, HistoryOutlined,UserOutlined,SafetyOutlined,SettingOutlined} from "@ant-design/icons";
+import {HistoryOutlined, HomeOutlined, SafetyOutlined, SettingOutlined} from "@ant-design/icons";
 import CheckpointPatroliPage from "../pages/patroli/checkpoint-patroli";
 import PatroliSecurityPage from "../pages/patroli-security/patroli-security";
 import PatroliWargaPage from "../pages/patroli-warga/patroli-warga";
 import JadwalPage from "../pages/jadwal/jadwal";
 import CheckpointPage from "../pages/checkpoint/checkpoint";
+import CheckpointPatroliMap from "../pages/patroli/component/checkpoint-patroli-map";
 
 const PagesWithoutNavBar = [
     "/login",
@@ -29,6 +30,7 @@ const PagesWithoutNavBar = [
 ];
 
 const MainTabs: React.FC = () => {
+    const {user} = useAuth()
     const ionRouter = useIonRouter();
     const location = useLocation();
     const auth = useAuth();
@@ -66,18 +68,21 @@ const MainTabs: React.FC = () => {
                     href="/beranda"
                     className={styles.tabButton}
                 >
-                    <HomeOutlined className={"text-lg"}  />
+                    <HomeOutlined className={"text-lg"}/>
                     <IonLabel className={styles.tabLabel}>Beranda</IonLabel>
                 </IonTabButton>
 
-                <IonTabButton
-                    tab="jadwal"
-                    href="/jadwal"
-                    className={styles.tabButton}
-                >
-                    <HistoryOutlined className={"text-lg"} />
-                    <IonLabel className={styles.tabLabel}>Jadwal</IonLabel>
-                </IonTabButton>
+                {
+                    user?.role !== 'warga' && <IonTabButton
+                        tab="jadwal"
+                        href="/jadwal"
+                        className={styles.tabButton}
+                    >
+                        <HistoryOutlined className={"text-lg"}/>
+                        <IonLabel className={styles.tabLabel}>Jadwal</IonLabel>
+                    </IonTabButton>
+                }
+
 
                 <IonTabButton
                     tab="patroli-warga"
@@ -88,13 +93,16 @@ const MainTabs: React.FC = () => {
                     <IonLabel className={styles.tabLabel}>Warga</IonLabel>
                 </IonTabButton>
 
-                <IonTabButton tab="patroli-security" href="/patroli-security" className={styles.tabButton}>
-                    <SafetyOutlined className={"text-lg"}/>
-                    <IonLabel className={styles.tabLabel}>Security</IonLabel>
-                </IonTabButton>
+                {
+                    user?.role !== 'warga' &&
+                    <IonTabButton tab="patroli-security" href="/patroli-security" className={styles.tabButton}>
+                        <SafetyOutlined className={"text-lg"}/>
+                        <IonLabel className={styles.tabLabel}>Security</IonLabel>
+                    </IonTabButton>
+                }
 
                 <IonTabButton tab="profil" href="/profil" className={styles.tabButton}>
-                    <SettingOutlined className={"text-lg"}  />
+                    <SettingOutlined className={"text-lg"}/>
                     <IonLabel className={styles.tabLabel}>Pengaturan</IonLabel>
                 </IonTabButton>
             </IonTabBar>
@@ -122,6 +130,15 @@ const MainTabs: React.FC = () => {
                     render={() => (
                         <ProtectedRoute>
                             <JadwalPage/>
+                        </ProtectedRoute>
+                    )}
+                />
+
+                <Route
+                    path="/checkpoint-patroli-map"
+                    render={() => (
+                        <ProtectedRoute>
+                            <CheckpointPatroliMap/>
                         </ProtectedRoute>
                     )}
                 />

@@ -1,8 +1,8 @@
 import {ISelect} from "./iselect";
 import {useGetList} from "../../../hooks/useApi";
 import {ResponseListType} from "../../../lib/interface/response-type";
-import FormSelect from "../../form/form-select";
 import JadwalSecurityEntity from "../../../entities/jadwal-security";
+import FormSelect from "../../form/form-select";
 
 export default function JadwalSelect({
                                          name = "shift",
@@ -11,8 +11,9 @@ export default function JadwalSelect({
                                          mode,
                                          tanggal,
                                          id_user,
-                                         disabled = false
-                                     }: ISelect & { tanggal: string, id_user: string |undefined }) {
+                                         disabled = false,
+                                     }: ISelect & { tanggal: string, id_user: string | undefined }) {
+
     const {data, isFetching} = useGetList<ResponseListType<JadwalSecurityEntity[]>>
     ({
         name,
@@ -29,8 +30,7 @@ export default function JadwalSelect({
             value: item.id.toString()
         }
     })
-
-    return  <FormSelect
+    return <FormSelect
         mode={mode}
         name={name}
         label={label}

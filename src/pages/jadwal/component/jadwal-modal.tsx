@@ -1,6 +1,6 @@
 import CheckpointEntity from "../../../entities/checkpoint.entity";
 import {Dispatch, useEffect} from "react";
-import {Form, message} from "antd";
+import {Form, message, Select} from "antd";
 import {usePost, usePut} from "../../../hooks/useApi";
 import FormModal from "../../../components/modal/form-modal";
 import FormTextarea from "../../../components/form/form-textarea";
@@ -9,6 +9,7 @@ import FormDate from "../../../components/form/form-date";
 import {useAuth} from "../../../providers/auth-provider";
 import SecuritySelect from "../../../components/shared/select/security-select";
 import JadwalSelect from "../../../components/shared/select/jadwal-select";
+import dayjs from "dayjs";
 
 interface IPropsModal {
     selectedData: TukarShiftEntity | undefined,
@@ -43,27 +44,34 @@ export default function JadwalModal({isOpen, setIsOpen, selectedData, setSelecte
     })
 
     function handleSubmit(value: any) {
+        if(["approve",'reject'].includes(selectedData?.status as string)){
+            message.warning(`Status sudah di ${selectedData?.status}`)
+            return
+        }
         if (selectedData) {
             update({
                 ...value,
-                status:false
+                id_user_requester: user?.id,
+                status: 'request'
             })
             return
         }
         create({
             ...value,
-            status:false
+            id_user_requester: user?.id,
+            status: 'request'
         })
-    }
-
-
-    function isRequester() {
-        return selectedData?.id_user_requester === user?.id
     }
 
     useEffect(() => {
         if (selectedData) {
-            form.setFieldsValue({...selectedData})
+            form.setFieldsValue({
+                ...selectedData,
+                id_request_jadwal_security: selectedData?.id_request_jadwal_security?.toString(),
+                id_user_approver: selectedData?.id_user_approver?.toString(),
+                id_approve_jadwal_security: selectedData?.id_approve_jadwal_security?.toString(),
+                tanggal: dayjs(selectedData?.jadwal_requested?.tanggal_mulai)
+            })
         }
         if (!isOpen) {
             form.resetFields()
@@ -88,26 +96,14 @@ export default function JadwalModal({isOpen, setIsOpen, selectedData, setSelecte
             <FormDate
                 name={"tanggal"}
                 label={"tanggal"}
-                onChange={(value) => {
-                    // form.setFieldValue('','')
-                }}
             />
 
-            {/*id_user_requester*/}
-            <SecuritySelect
-                name={"id_user_requester"}
-                label={"Requester"}
-                user={user}
-                disabled={true}
-            />
-
-            {/*id_request_jadwal_security*/}
             <JadwalSelect
                 name={"id_request_jadwal_security"}
                 label={"Dari Shift"}
                 tanggal={values?.tanggal?.format("YYYY-MM-DD")}
-                id_user={"1"}
-
+                id_user={user?.id.toString()}
+                disabled={["", null, undefined].includes(values?.tanggal)}
             />
 
             {/*id_user_approver*/}
@@ -124,6 +120,7 @@ export default function JadwalModal({isOpen, setIsOpen, selectedData, setSelecte
                 label={"Ke Shift"}
                 tanggal={values?.tanggal?.format("YYYY-MM-DD")}
                 id_user={values?.id_user_approver?.toString()}
+                disabled={["", null, undefined].includes(values?.id_user_approver?.toString())}
                 // id_user={user?.id?.toString() as string}
             />
 
