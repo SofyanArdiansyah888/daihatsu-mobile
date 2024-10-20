@@ -13,9 +13,10 @@ import {FloatButton} from "antd";
 import EmptyData from "../../components/empty-data";
 import JadwalModal from "./component/jadwal-modal";
 import TukarShiftEntity from "../../entities/tukar-shift.entity";
-import moment from "moment";
 import {useAuth} from "../../providers/auth-provider";
 import ApprovalModal from "./component/approval-modal";
+import {SwapOutlined} from '@ant-design/icons'
+import moment from "moment";
 
 
 export default function JadwalPage() {
@@ -34,6 +35,7 @@ export default function JadwalPage() {
         endpoint: "/tukar-shift",
         params: {
             ...params,
+            ...filterPayload,
             id_user: user?.id
         }
     })
@@ -44,6 +46,9 @@ export default function JadwalPage() {
 
     function handleItemClick(item: TukarShiftEntity) {
         setSelectedItem(item)
+
+        // JIKA USER LOGIN = REQUEST MAKA TAMPILKAN FORM EDIT
+        // ELSE TAMPILKAN APPROVAL
         if (user?.id?.toString() === item?.id_user_requester?.toString()) {
             setModal(true)
             return;
@@ -57,6 +62,15 @@ export default function JadwalPage() {
 
 
     return <IonPage>
+        <NavHeader
+            handleClick={handleBack}
+            title={"Tukar Jadwal"}
+            withBackButton={false}
+            icon={<FilterTanggal
+                filterPayload={filterPayload}
+                changeFilterPayload={changeFilterPayload}
+            />}
+        />
         <IonContent scrollY={true}>
             <IonRefresher
                 slot="fixed"
@@ -68,38 +82,63 @@ export default function JadwalPage() {
                 <IonRefresherContent></IonRefresherContent>
             </IonRefresher>
 
-            <NavHeader
-                handleClick={handleBack}
-                title={"Tukar Jadwal"}
-                withBackButton={false}
-                icon={<FilterTanggal
-                    filterPayload={filterPayload}
-                    changeFilterPayload={changeFilterPayload}
-                />}
-            />
+
             <main className={"p-4"}>
                 {
                     isLoading ? <SkeletonLoading/> :
-                        <section className={" space-y-2"}>
+                        <section className={" space-y-8"}>
                             <EmptyData
                                 data={data?.data}
                                 fullscreen={true}
                             />
+                            {/*<div className={"flex w-full"}>*/}
+                            {/*    <div className={"basis-1/2"}>*/}
+                            {/*        <h3 className={"font-semibold text-semibold"}>Asal</h3>*/}
+                            {/*        /!*<p className={"text-xs"}>Suparman</p>*!/*/}
+                            {/*        /!*<p className={"text-xs"}>28 September 2024 (Pagi)</p>*!/*/}
+                            {/*    </div>*/}
+                            {/*    <div className={"basis-1/2  text-right"}>*/}
+                            {/*        <h3 className={"font-semibold text-semibold"}>Tujuan</h3>*/}
+                            {/*        /!*<p className={"text-xs"}>Suparman</p>*!/*/}
+                            {/*        /!*<p className={"text-xs"}>28 September 2024 (Pagi)</p>*!/*/}
+                            {/*    </div>*/}
+                            {/*</div>*/}
+
+
+
                             {
                                 data?.data?.map((item: TukarShiftEntity) =>
-                                    <div
-                                        className={"flex justify-between items-center"}
-                                        onClick={() => handleItemClick(item)}
-                                    >
-                                        <div className={" py-2  rounded-md"}>
-                                            <h1 className={"text-sm font-semibold"}>{item?.jadwal_approved?.shift?.shift}  </h1>
-                                            <p className={"font-light text-xs capitalize"}>{item?.status}</p>
+                                        <div className={"flex w-full justify-between items-start"} onClick={() => handleItemClick(item)}>
+                                            <div className={"basis-1/2"}>
+                                                <p className={"text-xs font-semibold capitalize"}>{item?.user_requester?.fullname}</p>
+                                                <p className={"text-xs"}>{moment(item?.jadwal_requested?.tanggal_mulai).format("DD MMM YYYY")}</p>
+                                                <p className={"text-xs"}>{item?.jadwal_requested?.shift?.shift}</p>
+                                            </div>
+                                            <div>
+                                               <SwapOutlined className={`${item?.status === 'request' ? "text-slate-500" :
+                                                                           item?.status === 'approve' ? "text-green-500" : 
+                                                                           "text-red-500"} my-4`}
+                                               />
+                                            </div>
+                                            <div className={"basis-1/2  text-right "}>
+                                                <p className={"text-xs font-semibold capitalize"}>{item?.user_approver?.fullname}</p>
+                                                <p className={"text-xs"}>{moment(item?.jadwal_approved?.tanggal_mulai).format("DD MMM YYYY")}</p>
+                                                <p className={"text-xs"}>{item?.jadwal_approved?.shift?.shift}</p>
+                                            </div>
                                         </div>
-                                        <div className={"text-xs font-semibold items-end"}>
-                                            {moment(item?.jadwal_approved?.tanggal).format("D MMMM Y")}
-                                        </div>
-
-                                    </div>
+                                    // <div
+                                    //     className={"flex justify-between items-center"}
+                                    //     onClick={() => handleItemClick(item)}
+                                    // >
+                                    //     <div className={" py-2  rounded-md"}>
+                                    //         <h1 className={"text-sm font-semibold"}>{item?.jadwal_approved?.shift?.shift}  </h1>
+                                    //         <p className={"font-light text-xs capitalize"}>{item?.status}</p>
+                                    //     </div>
+                                    //     <div className={"text-xs font-semibold items-end"}>
+                                    //         {moment(item?.jadwal_approved?.tanggal_mulai).format("D MMMM Y")}
+                                    //     </div>
+                                    //
+                                    // </div>
                                 )
                             }
                         </section>

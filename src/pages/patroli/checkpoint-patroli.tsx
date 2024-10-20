@@ -148,7 +148,7 @@ export default function CheckpointPatroliPage() {
 
         // if the result has content
         if (result.hasContent) {
-            await BarcodeScanner.stopScan();
+            await BarcodeScanner.pauseScanning();
             setScanActive(false)
             try {
                 const content = JSON.parse(result?.content)

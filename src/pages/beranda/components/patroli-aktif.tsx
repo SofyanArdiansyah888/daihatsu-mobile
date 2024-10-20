@@ -11,13 +11,13 @@ export default function PatroliAktif({activeShift}: { activeShift: ShiftEntity |
 
     function handlePatroliClick() {
         if (activeShift) {
-            const schedules = activeShift?.jadwal_security_active;
-            const isUserExist = schedules?.some((item) => item.id_user == user?.id?.toString())
-            if (isUserExist) {
+            // const schedules = activeShift?.jadwal_security_active;
+            // const isUserExist = schedules?.some((item) => item.id_user == user?.id?.toString())
+            // if (isUserExist) {
                 history.push(`/checkpoint-patroli?id_shift=${activeShift.id}`)
-            } else {
-                message.warning("Anda tidak berada di shift ini")
-            }
+            // } else {
+            //     message.warning("Anda tidak berada di shift ini")
+            // }
         }
     }
 

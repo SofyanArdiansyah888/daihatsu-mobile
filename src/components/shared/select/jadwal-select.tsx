@@ -12,7 +12,7 @@ export default function JadwalSelect({
                                          tanggal,
                                          id_user,
                                          disabled = false,
-                                     }: ISelect & { tanggal: string, id_user: string | undefined }) {
+                                     }: ISelect & { tanggal: string, id_user?: string | undefined }) {
 
     const {data, isFetching} = useGetList<ResponseListType<JadwalSecurityEntity[]>>
     ({

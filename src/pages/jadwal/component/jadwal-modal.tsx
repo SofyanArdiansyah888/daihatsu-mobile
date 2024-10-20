@@ -70,7 +70,8 @@ export default function JadwalModal({isOpen, setIsOpen, selectedData, setSelecte
                 id_request_jadwal_security: selectedData?.id_request_jadwal_security?.toString(),
                 id_user_approver: selectedData?.id_user_approver?.toString(),
                 id_approve_jadwal_security: selectedData?.id_approve_jadwal_security?.toString(),
-                tanggal: dayjs(selectedData?.jadwal_requested?.tanggal_mulai)
+                tanggal_asal: dayjs(selectedData?.jadwal_requested?.tanggal_mulai),
+                tanggal_tujuan: dayjs(selectedData?.jadwal_approved?.tanggal_mulai)
             })
         }
         if (!isOpen) {
@@ -94,22 +95,27 @@ export default function JadwalModal({isOpen, setIsOpen, selectedData, setSelecte
 
             {/*tanggal*/}
             <FormDate
-                name={"tanggal"}
-                label={"tanggal"}
+                name={"tanggal_asal"}
+                label={"tanggal Asal"}
             />
 
             <JadwalSelect
                 name={"id_request_jadwal_security"}
-                label={"Dari Shift"}
-                tanggal={values?.tanggal?.format("YYYY-MM-DD")}
+                label={"Shift Asal"}
+                tanggal={values?.tanggal_asal?.format("YYYY-MM-DD")}
                 id_user={user?.id.toString()}
-                disabled={["", null, undefined].includes(values?.tanggal)}
+                disabled={["", null, undefined].includes(values?.tanggal_asal)}
             />
+            <FormDate
+                name={"tanggal_tujuan"}
+                label={"tanggal Tujuan"}
+            />
+
 
             {/*id_user_approver*/}
             <SecuritySelect
                 name={"id_user_approver"}
-                label={"Approver"}
+                label={"Partner Tujuan"}
                 excludeUser={user}
                 // disabled={!isRequester()}
             />
@@ -117,13 +123,12 @@ export default function JadwalModal({isOpen, setIsOpen, selectedData, setSelecte
             {/*id_approve_jadwal_security*/}
             <JadwalSelect
                 name={"id_approve_jadwal_security"}
-                label={"Ke Shift"}
-                tanggal={values?.tanggal?.format("YYYY-MM-DD")}
+                label={"Shift Tujuan"}
+                tanggal={values?.tanggal_tujuan?.format("YYYY-MM-DD")}
                 id_user={values?.id_user_approver?.toString()}
                 disabled={["", null, undefined].includes(values?.id_user_approver?.toString())}
                 // id_user={user?.id?.toString() as string}
             />
-
 
             {/*catatan*/}
             <FormTextarea

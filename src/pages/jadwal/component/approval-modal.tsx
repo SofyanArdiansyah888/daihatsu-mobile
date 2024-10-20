@@ -46,6 +46,7 @@ export default function ApprovalModal({isOpen, setIsOpen, selectedData, setSelec
         if (selectedData) {
             update({
                 ...value,
+                ...selectedData,
                 status: 'approve'
             })
             return
@@ -56,6 +57,7 @@ export default function ApprovalModal({isOpen, setIsOpen, selectedData, setSelec
         if (selectedData) {
             update({
                 ...value,
+                ...selectedData,
                 status: 'reject'
             })
             return
@@ -65,6 +67,7 @@ export default function ApprovalModal({isOpen, setIsOpen, selectedData, setSelec
 
     useEffect(() => {
         if (selectedData) {
+            console.log("SELECTED JAGA:",selectedData)
             const tanggal = selectedData?.jadwal_requested?.tanggal_mulai
             form.setFieldsValue({
                 ...selectedData,
@@ -72,6 +75,12 @@ export default function ApprovalModal({isOpen, setIsOpen, selectedData, setSelec
                 id_approve_jadwal_security: selectedData?.id_approve_jadwal_security?.toString(),
                 id_user_approver: selectedData?.id_user_approver?.toString(),
                 id_user_requester: selectedData?.id_user_requester?.toString(),
+                shift_tujuan: selectedData?.jadwal_approved?.shift?.shift,
+                shift_asal: selectedData?.jadwal_requested?.shift?.shift,
+                partner_asal: selectedData?.user_requester?.fullname,
+                partner_tujuan: selectedData?.user_approver?.fullname,
+
+
                 status:  selectedData?.status?.toUpperCase()?.toString(),
                 tanggal: moment(tanggal)
             })
@@ -98,48 +107,39 @@ export default function ApprovalModal({isOpen, setIsOpen, selectedData, setSelec
     >
 
         <div className={""}>
-
-            {/*tanggal*/}
-            <FormDate
-                name={"tanggal"}
-                label={"tanggal"}
-                disabled={true}
-            />
             <FormInput
                 name={"status"} label={"Status"} disabled={true}
             />
 
-            {/*id_user_requester*/}
-            <SecuritySelect
-                name={"id_user_requester"}
-                label={"Requester"}
-                user={user}
+            {/*tanggal*/}
+            <FormDate
+                name={"tanggal"}
+                label={"tanggal asal"}
                 disabled={true}
             />
 
-            {/*id_request_jadwal_security*/}
-            <JadwalSelect
-                name={"id_request_jadwal_security"}
-                label={"Dari Shift"}
-                tanggal={values?.tanggal?.format("YYYY-MM-DD")}
-                id_user={user?.id?.toString()}
+            <FormInput
+                name={"partner_asal"}
+                label={"Partner Asal"}
                 disabled={true}
             />
 
-            {/*id_user_approver*/}
-            <SecuritySelect
-                name={"id_user_approver"}
-                label={"Approver"}
-                excludeUser={user}
+
+            <FormInput
+                name={"shift_asal"}
+                label={"Shift Asal"}
                 disabled={true}
             />
 
-            {/*id_approve_jadwal_security*/}
-            <JadwalSelect
-                name={"id_approve_jadwal_security"}
-                label={"Ke Shift"}
-                tanggal={values?.tanggal?.format("YYYY-MM-DD")}
-                id_user={values?.id_user_approver?.toString()}
+            <FormInput
+                name={"partner_tujuan"}
+                label={"Partner Tujuan"}
+                disabled={true}
+            />
+
+            <FormInput
+                name={"shift_tujuan"}
+                label={"Shift Tujuan"}
                 disabled={true}
             />
 
